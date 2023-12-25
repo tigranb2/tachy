@@ -2,6 +2,7 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const express = require('express');
 const mongoose = require('mongoose');
+const morgan = require('morgan');
 
 
 const router = require('./router');
@@ -10,7 +11,7 @@ dotenv.config(); // use .env
 
 const app = express();
 app.use(cors());
-//app.use(morgan('tiny'));
+app.use(morgan('tiny'));
 app.use(router);
 
 // connect to MongoDB
