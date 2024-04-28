@@ -3,7 +3,7 @@ import React, { useState, useEffect, Fragment } from "react";
 import createEvents from '../api/createEvents';
 import "./Stopwatch.css";
 
-const Stopwatch = () => {
+export default function Stopwatch ({ events,  setEvents }) {
   const [time, setTime] = useState(0); // stores stopwatch time
   const [startTime, setStartTime] = useState(0); // start time at epoch
 
@@ -46,15 +46,19 @@ const Stopwatch = () => {
     startDate.setUTCMilliseconds(startTime)
     endDate.setUTCMilliseconds(startTime+(time*10))
     
+    // reset timer
     setStartTime(0);
     setTime(0);
     setIsRunning(false);
-    createEvents({
+
+    // create event and upload to database
+    const newEvent = {
       tag: "",
       startTime: startDate,
       endTime: endDate,
-    });
-
+    }
+    createEvents(newEvent);
+    setEvents([...events, newEvent]); // add events to local data
   };
 
   // Method to set timer back to 0
@@ -102,5 +106,3 @@ const Stopwatch = () => {
     </div>
   );
 };
-
-export default Stopwatch;

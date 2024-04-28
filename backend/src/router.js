@@ -5,12 +5,13 @@ const EventModel = require('./models/EventModel')
 const router = express.Router();
 
 router.post('/createEvent', (req, res) => {
-    EventModel.create({
+    const event = new EventModel({
         tag: req.body.tag,
         startTime: req.body.startTime,
         endTime: req.body.endTime,
-    })
-        .then((event) => res.json(event))
+    });
+    event.save()
+        .then((newEvent) => res.json(newEvent))
         .catch((err) => res.json(err));
 }); // create event in DB
 

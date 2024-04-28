@@ -1,0 +1,21 @@
+#calendarContainer {
+    width: 50%;
+    background-color: #f8f8f8;
+    border-radius: 1%;
+    overflow: hidden;
+    margin: 1rem
+}
+
+.rbc-calendar {
+    font-family: Arial, Helvetica, sans-serif;
+    border: 0;
+    height: calc(100vh - var(--nav-height) - 1.5rem);
+}
+
+.rbc-time-slot {
+    min-height: 20.8vh;
+}
+
+.rbc-allday-cell {
+    display: none !important;
+}

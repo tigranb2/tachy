@@ -1,0 +1,61 @@
+.stopwatchTime {
+    font-size: 2em;
+}
+
+.stopwatchContainer {
+    text-align: center;
+    background-color: var(--container-color);
+    border: 3px var(--site-accent-color-2) solid;
+    width: 40vw;
+}
+
+.stopwatchButtons {
+    display: flex;
+}
+
+.stopwatchButton {
+    border-radius: 0;
+    width: 100%;
+    background-color: var(--container-color);
+    color: var(--site-accent-color-2);
+    border-top: 3px solid var(--site-accent-color-2);
+    border-bottom: 0;
+    font-weight: 800;
+    height: 45px;
+}
+
+.stopwatchButton.left {
+    border-left: 0;
+    border-right: 1.5px solid var(--site-accent-color-2);
+}
+
+.stopwatchButton.middle {
+    border-left: 1.5px solid var(--site-accent-color-2);
+    border-right: 1.5px solid var(--site-accent-color-2);
+}
+
+.stopwatchButton.right {
+    border-left: 1.5px solid var(--site-accent-color-2);
+    border-right: 0;
+    min-width: 50%;
+}
+
+.stopwatchButton:disabled {
+    cursor: not-allowed;
+    background-color: rgb(229, 229, 229);
+    color: grey;
+}
+
+.stopwatchButton:hover {
+    border-top: 3px solid var(--site-accent-color-2);
+}
+
+.stopwatchButton:hover:enabled,
+.button:focus {
+    background-color: var(--site-accent-color-2);
+    color: var(--container-color);
+}
+
+.stopwatchButton:focus {
+    outline: none;
+}
