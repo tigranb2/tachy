@@ -3,6 +3,7 @@ import { useQuery } from 'react-query';
 import moment from 'moment';
 import { momentLocalizer } from 'react-big-calendar';
 
+import AddButton from '../components/AddButton';
 import EventCalendar from '../components/EventCalendar';
 import Stopwatch from '../components/Stopwatch';
 import "./TimePage.css"; // style sheet
@@ -12,6 +13,7 @@ import readEvents from '../api/readEvents';
 export default function TimePage() {
 
     const [events, setEvents] = useState();
+    const [stopwatchIds, setStopwatchIds] = useState([1]);
 
     // fetch events from DB and store to state variable
     const { isLoading, data: _ } = useQuery(
@@ -32,6 +34,7 @@ export default function TimePage() {
         }
     }, [isLoading]);
 
+    console.log(stopwatchIds)
 
     const localizer = momentLocalizer(moment)
     return (
@@ -42,7 +45,17 @@ export default function TimePage() {
             : <div id="timePageContainer">
                 <EventCalendar localizer={localizer} events={events} />
                 <div id="timerContainer">
-                    <Stopwatch events={events} setEvents={setEvents}/>
+                    {stopwatchIds.map((id) => (
+                        <Stopwatch 
+                            key={id}
+                            itemId={id} 
+                            events={events} 
+                            setEvents={setEvents} 
+                            stopwatchIds={stopwatchIds} 
+                            setStopwatchIds={setStopwatchIds}
+                        />
+                    ))}
+                    {stopwatchIds.length < 3 && <AddButton stopwatchIds={stopwatchIds} setStopwatchIds={setStopwatchIds}/>}
                 </div>
             </div>
     );

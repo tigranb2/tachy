@@ -3,7 +3,7 @@ import React, { useState, useEffect, Fragment } from "react";
 import createEvents from '../api/createEvents';
 import "./Stopwatch.css";
 
-export default function Stopwatch ({ events,  setEvents }) {
+export default function Stopwatch ({ itemId, events,  setEvents, stopwatchIds, setStopwatchIds }) {
   const [time, setTime] = useState(0); // stores stopwatch time
   const [startTime, setStartTime] = useState(0); // start time at epoch
 
@@ -69,8 +69,9 @@ export default function Stopwatch ({ events,  setEvents }) {
 
   return (
     <div className="stopwatchContainer">
+      {itemId != 1 && <button className="removeStopwatch" onClick={()=>setStopwatchIds(stopwatchIds.slice(0,-1))}>{itemId}</button>}
       <p className="stopwatchTime">
-        {hours.toString().padStart(2, "0")}:
+        {hours > 0 ? hours.toString().padStart(2, "0") + ":" : ""}
         {minutes.toString().padStart(2, "0")}:
         {seconds.toString().padStart(2, "0")}.
         {milliseconds.toString().padStart(2, "0")}
