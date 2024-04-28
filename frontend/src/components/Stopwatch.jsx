@@ -4,35 +4,31 @@ import createEvents from '../api/createEvents';
 import "./Stopwatch.css";
 
 const Stopwatch = () => {
-  // state to store time
-  const [time, setTime] = useState(0);
-  const [startTime, setStartTime] = useState(0); // start time in epoch
+  const [time, setTime] = useState(0); // stores stopwatch time
+  const [startTime, setStartTime] = useState(0); // start time at epoch
 
-  // state to check stopwatch running or not
+  // tracks whether stopwatch is running
   const [isRunning, setIsRunning] = useState(false);
 
   useEffect(() => {
     let intervalId;
     if (isRunning) {
-      // setting time from 0 to 1 every 10 milisecond using javascript setInterval method
-      intervalId = setInterval(() => setTime(time + 1), 10);
+      // update timer every ~10 milliseconds
+      intervalId = setInterval(() => {
+        let prevTime = startTime + (time * 10)
+        let dt = Date.now() - prevTime; // milliseconds elapsed since last iteration
+        setTime(time + Math.floor(dt/10)) // divide by 10... doesn't have ms percision
+      }, 10);
     }
     return () => clearInterval(intervalId);
   }, [isRunning, time]);
 
-  // Hours calculation
   const hours = Math.floor(time / 360000);
-
-  // Minutes calculation
   const minutes = Math.floor((time % 360000) / 6000);
-
-  // Seconds calculation
   const seconds = Math.floor((time % 6000) / 100);
-
-  // Milliseconds calculation
   const milliseconds = time % 100;
 
-  // Method to pause and unpause timer
+  // Method to pause & unpause timer
   const pauseUnpause = () => {
     setIsRunning(!isRunning);
   };
@@ -43,12 +39,12 @@ const Stopwatch = () => {
     pauseUnpause();
   };
 
-  // Method to reset timer back to 0
+  // Method to create event with timer time
   const save = () => {
     const startDate = new Date(0);
     const endDate = new Date(0);
     startDate.setUTCMilliseconds(startTime)
-    endDate.setUTCMilliseconds(startTime+time*10)
+    endDate.setUTCMilliseconds(startTime+(time*10))
     
     setStartTime(0);
     setTime(0);
@@ -61,7 +57,7 @@ const Stopwatch = () => {
 
   };
 
-  // Method to reset timer back to 0
+  // Method to set timer back to 0
   const reset = () => {
     setTime(0);
     setIsRunning(false);
