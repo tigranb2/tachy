@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 // specifies schema for an event 
 const eventSchema = new mongoose.Schema({
-    tag: { // optional tag to categorize events
+    title: { // optional name to categorize events
         type: String,
     },
     startTime: {

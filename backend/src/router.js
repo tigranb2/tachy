@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.post('/createEvent', (req, res) => {
     const event = new EventModel({
-        tag: req.body.tag,
+        title: req.body.title,
         startTime: req.body.startTime,
         endTime: req.body.endTime,
     });
@@ -24,7 +24,7 @@ router.get('/readEvent', (req, res) => {
 router.put('/updateEvent/:id', (res, req) => {
     const id = req.params.id;
     const updatedEvent = {
-        tag: req.body.tag,
+        title: req.body.title,
         startTime: req.body.startTime,
         endTime: req.body.endTime,
     };
