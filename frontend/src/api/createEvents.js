@@ -7,7 +7,7 @@ export default (event) => {
       "Content-Type": 'application/json'
     },
     body: JSON.stringify({
-      tag: event.tag,
+      title: event.title,
       startTime: event.startTime,
       endTime: event.endTime
     })
