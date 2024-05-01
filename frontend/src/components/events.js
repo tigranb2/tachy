@@ -45,8 +45,8 @@ export default [
   {
     id: 6,
     title: 'Meeting',
-    start: new Date(2015, 3, 12, 10, 30, 0, 0),
-    end: new Date(2015, 3, 12, 12, 30, 0, 0),
+    start: new Date(2024, 12, 4, 10, 30, 0, 0),
+    end: new Date(2024, 12, 4, 12, 30, 0, 0),
     desc: 'Pre-meeting meeting, to prepare for the meeting',
   },
   {

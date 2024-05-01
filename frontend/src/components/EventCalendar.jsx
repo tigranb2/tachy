@@ -16,7 +16,7 @@ export default function EventCalendar({
     setMyEvents(events.map(x => (
       {
         id: 0,
-        title: x.tag,
+        title: x.title,
         allDay: false,
         start: new Date(x.startTime),
         end: new Date(x.endTime),
@@ -24,15 +24,6 @@ export default function EventCalendar({
     ))
   )}, [events]);
 
-  const handleSelectSlot = useCallback(
-    ({ start, end }) => {
-      const title = window.prompt('New Event Name')
-      if (title) {
-        setEvents((prev) => [...prev, { start, end, title }])
-      }
-    },
-    [setMyEvents]
-  )
 
   const handleSelectEvent = useCallback(
     (event) => window.alert(event.title),
@@ -56,7 +47,7 @@ export default function EventCalendar({
           events={myEvents}
           localizer={localizer}
           onSelectEvent={handleSelectEvent}
-          onSelectSlot={handleSelectSlot}
+          // onSelectSlot={handleSelectSlot}
           onSelecting={_ => false}
           selectable
           // scrollToTime={scrollToTime}

@@ -34,8 +34,6 @@ export default function TimePage() {
         }
     }, [isLoading]);
 
-    console.log(stopwatchIds)
-
     const localizer = momentLocalizer(moment)
     return (
         isLoading
