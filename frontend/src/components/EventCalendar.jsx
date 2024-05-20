@@ -1,5 +1,6 @@
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import React, { useCallback, useEffect, useState, useMemo, Fragment } from 'react'
+import React, { useEffect, useState, Fragment } from 'react'
+import { useQueryClient, useMutation } from 'react-query';
 import PropTypes from 'prop-types'
 import { Calendar, Views, DateLocalizer } from 'react-big-calendar'
 import Modal from 'react-modal';
@@ -7,6 +8,7 @@ import moment from 'moment';
 
 
 import CustomToolbar from './CustomToolbar';
+import deleteEventRequest from '../api/deleteEventRequest';
 import "./EventCalendar.css";
 
 export default function EventCalendar({
@@ -16,11 +18,10 @@ export default function EventCalendar({
   const [myEvents, setMyEvents] = useState();
   const [selectedEvent, setSelectedEvent] = useState(undefined)
 
-  console.log(selectedEvent)
   useEffect(() => {
     setMyEvents(events.map(x => (
       {
-        id: 0,
+        id: x._id,
         title: x.title,
         allDay: false,
         start: new Date(x.startTime),
@@ -28,6 +29,21 @@ export default function EventCalendar({
       }
     ))
   )}, [events]);
+
+
+
+  const queryClient = useQueryClient();
+
+  // call API to delete event & invalidate local cache
+  const { mutate: deleteEvent } = useMutation(
+    () => deleteEventRequest(selectedEvent),
+    {
+      onSettled: () => {
+        setSelectedEvent(null);
+        queryClient.invalidateQueries('events');
+      },
+    }
+  );
 
 
   const handleSelectEvent = (event) => (
@@ -66,6 +82,9 @@ export default function EventCalendar({
             <p className="popupTimes">
               {moment(selectedEvent.start).format("MMMM DD, YYYY, HH:mm A")} – {moment(selectedEvent.end).format("MMMM DD, YYYY, HH:mm A")}
             </p>
+            <button  onClick={deleteEvent}>
+              DELETE 
+            </button>
         </Modal>}
         <Calendar
           components={{

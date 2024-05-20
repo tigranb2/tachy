@@ -1,9 +1,10 @@
 import React, { useState, useEffect, Fragment } from "react";
+import { useMutation, useQueryClient } from 'react-query';
 
-import createEvents from '../api/createEvents';
+import createEventRequest from '../api/createEventRequest';
 import "./Stopwatch.css";
 
-export default function Stopwatch ({ itemId, events,  setEvents, stopwatchIds, setStopwatchIds }) {
+export default function Stopwatch ({ itemId, stopwatchIds, setStopwatchIds }) {
   const [title, setTitle] = useState(""); // stores stopwatch title
   const [time, setTime] = useState(0); // stores stopwatch time
   const [startTime, setStartTime] = useState(0); // start time at epoch
@@ -40,28 +41,37 @@ export default function Stopwatch ({ itemId, events,  setEvents, stopwatchIds, s
     pauseUnpause();
   };
 
-  // Method to create event with timer time
-  const save = () => {
-    const startDate = new Date(0);
-    const endDate = new Date(0);
-    startDate.setUTCMilliseconds(startTime)
-    endDate.setUTCMilliseconds(startTime+(time*10))
-    
-    // reset timer
-    setStartTime(0);
-    setTime(0);
-    setIsRunning(false);
+  const queryClient = useQueryClient();
 
-    // create event and upload to database
-    const newEvent = {
-      tag: "",
-      title: title,
-      startTime: startDate,
-      endTime: endDate,
+  // API call to create event given timer start and end times
+  // invalidates local cache after compeletion
+  const { mutate: createEvent } = useMutation(
+    () => {
+      const startDate = new Date(0);
+      const endDate = new Date(0);
+      startDate.setUTCMilliseconds(startTime)
+      endDate.setUTCMilliseconds(startTime+(time*10))
+      
+      // reset timer
+      setStartTime(0);
+      setTime(0);
+      setIsRunning(false);
+
+      // create event and upload to database
+      const newEvent = {
+        tag: "",
+        title: title,
+        startTime: startDate,
+        endTime: endDate,
+      }
+      return createEventRequest(newEvent);
+    },
+    {
+      onSettled: () => {
+        queryClient.invalidateQueries('events');
+      },
     }
-    createEvents(newEvent);
-    setEvents([...events, newEvent]); // add events to local data
-  };
+  );
 
   // Method to set timer back to 0
   const reset = () => {
@@ -124,13 +134,13 @@ export default function Stopwatch ({ itemId, events,  setEvents, stopwatchIds, s
         }
         {
           time == 0
-            ? <button className="stopwatchButton right" disabled onClick={save}>
+            ? <button className="stopwatchButton right" disabled onClick={createEvent}>
               SAVE
             </button>
             : <Fragment><button className="stopwatchButton middle" onClick={reset}>
               RESET
             </button>
-              <button className="stopwatchButton right" onClick={save}>
+              <button className="stopwatchButton right" onClick={createEvent}>
                 SAVE
               </button>
             </Fragment>

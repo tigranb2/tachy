@@ -6,10 +6,6 @@ import TimePage from './pages/TimePage';
 
 function App() {
 
-  useEffect(() => {
-
-  }, []);
-
   return (
     <div className="App">
       <header>

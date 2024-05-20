@@ -7,7 +7,7 @@ import AddButton from '../components/AddButton';
 import EventCalendar from '../components/EventCalendar';
 import Stopwatch from '../components/Stopwatch';
 import "./TimePage.css"; // style sheet
-import readEvents from '../api/readEvents';
+import readEventsRequest from '../api/readEventsRequest';
 
 
 export default function TimePage() {
@@ -18,7 +18,7 @@ export default function TimePage() {
     // fetch events from DB and store to state variable
     const { isLoading, data: _ } = useQuery(
         'events', 
-        () => readEvents(),
+        () => readEventsRequest(),
         {
             onSuccess: (data) => {setEvents(data);}
         }
@@ -47,8 +47,6 @@ export default function TimePage() {
                         <Stopwatch 
                             key={id}
                             itemId={id} 
-                            events={events} 
-                            setEvents={setEvents} 
                             stopwatchIds={stopwatchIds} 
                             setStopwatchIds={setStopwatchIds}
                         />
