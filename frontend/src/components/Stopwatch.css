@@ -32,18 +32,6 @@
 
 .removeStopwatch {
     font-size: 2em;
-    padding: 0px;
-    border: 0;
-    text-align: center;
-    vertical-align: middle;
-    background: none;
-    justify-content: center;
-    align-items: center;
-    display: flex;
-}
-
-.removeStopwatch:hover {
-    color: gray;
 
 }
 
@@ -96,4 +84,8 @@
 
 .stopwatchButton:focus {
     outline: none;
+}
+
+.removeStopwatch {
+    font-size: 2em;
 }

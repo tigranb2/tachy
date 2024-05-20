@@ -1,9 +1,9 @@
 #calendarContainer {
     width: 50%;
     background-color: #f8f8f8;
-    border-radius: 1%;
     overflow: hidden;
-    margin: 1rem
+    margin: 1rem;
+    border: 3px var(--site-accent-color-2) solid;
 }
 
 .rbc-calendar {
@@ -12,10 +12,34 @@
     height: calc(100vh - var(--nav-height) - 1.5rem);
 }
 
-.rbc-time-slot {
-    min-height: 20.8vh;
+.rbc-today {
+    background-color: rgb(255, 253, 233); 
 }
+
+/* .rbc-time-slot {
+    min-height: 20.8vh;
+} */
 
 .rbc-allday-cell {
     display: none !important;
+}
+
+.popupHeader {
+    display: flex;
+    justify-content: space-between;
+}
+.popupTitle {
+    display:inline-block;
+    align-self: center;
+    margin: 0;
+}
+
+.closePopup {
+    font-size: 1.5em;
+}
+
+.popupTimes {
+    margin-top: 5px;
+    font-size: small;
+    font-weight: 200;
 }

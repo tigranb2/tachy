@@ -20,6 +20,20 @@ body {
   display: flex;
 }
 
+.closeButton {
+  padding: 0px;
+  border: 0;
+  text-align: center;
+  vertical-align: middle;
+  background: none;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+.closeButton:hover {
+  color: gray;
+}
+
 /* :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
