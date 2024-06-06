@@ -1,9 +1,10 @@
 import { API_URL } from "./config"
 
-export default (event) => {
+export default (event, token) => {
   return fetch(`${API_URL}/createEvent`, {
     method: 'POST',
     headers: {
+      Authorization: `Bearer ${token}`,
       "Content-Type": 'application/json'
     },
     body: JSON.stringify({

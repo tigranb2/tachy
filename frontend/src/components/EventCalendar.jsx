@@ -1,12 +1,12 @@
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import React, { useEffect, useState, Fragment } from 'react'
+import React, { useContext, useEffect, useState, Fragment } from 'react'
 import { useQueryClient, useMutation } from 'react-query';
 import PropTypes from 'prop-types'
 import { Calendar, Views, DateLocalizer } from 'react-big-calendar'
 import Modal from 'react-modal';
 import moment from 'moment';
 
-
+import { TokenContext } from '../App';
 import CustomToolbar from './CustomToolbar';
 import deleteEventRequest from '../api/deleteEventRequest';
 import "./EventCalendar.css";
@@ -16,7 +16,11 @@ export default function EventCalendar({
   events,
 }) {
   const [myEvents, setMyEvents] = useState();
-  const [selectedEvent, setSelectedEvent] = useState(undefined)
+  const [selectedEvent, setSelectedEvent] = useState(null)
+
+  // get token
+  const { token } = useContext(TokenContext);
+  const [tokenVal, setToken] = token;
 
   useEffect(() => {
     setMyEvents(events.map(x => (
@@ -36,7 +40,7 @@ export default function EventCalendar({
 
   // call API to delete event & invalidate local cache
   const { mutate: deleteEvent } = useMutation(
-    () => deleteEventRequest(selectedEvent),
+    () => deleteEventRequest(selectedEvent, tokenVal),
     {
       onSettled: () => {
         setSelectedEvent(null);
@@ -70,7 +74,7 @@ export default function EventCalendar({
     <Fragment>
       <div id="calendarContainer">
         {selectedEvent && <Modal
-          isOpen={selectedEvent}
+          isOpen={selectedEvent != null}
           onRequestClose={() => setSelectedEvent(null)}
           style={modalStyles}>
             <div className="popupHeader">
@@ -80,7 +84,7 @@ export default function EventCalendar({
               </button>
             </div>
             <p className="popupTimes">
-              {moment(selectedEvent.start).format("MMMM DD, YYYY, HH:mm A")} – {moment(selectedEvent.end).format("MMMM DD, YYYY, HH:mm A")}
+              {moment(selectedEvent.start).format("MMMM DD, YYYY, hh:mm A")} – {moment(selectedEvent.end).format("MMMM DD, YYYY, hh:mm A")}
             </p>
             <button  onClick={deleteEvent}>
               DELETE 

@@ -1,13 +1,39 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react';
+import { useQueryClient } from 'react-query';
+import { useNavigate } from 'react-router-dom';
+import Cookies from 'universal-cookie';
 
+import { TokenContext } from '../App';
 import "./NavBar.css" // stylesheet
 
 
 function NavBar() {
     const [showMenu, setShowMenu] = useState(false);
+    
+    // get token and authentication state
+    const { token, auth } = useContext(TokenContext);
+    const [_, setToken] = token;
+    const [authVal, setAuth] = auth;
+
+    const navigate = useNavigate();
+    const cookies = new Cookies(null, { path: '/' });
+    const queryClient = useQueryClient();
 
     function toggleMenu(){
         setShowMenu(!showMenu);
+    };
+
+    // method to handle click on login button
+    const loginClick = () => {
+        navigate('/login')
+    };
+    // method to handle click on logout button
+    const logoutClick = () => {
+        setAuth(false)
+        setToken(undefined)
+        cookies.remove('token')
+        queryClient.removeQueries('events')
+        navigate('/', { replace: true })
     };
 
     return (
@@ -18,9 +44,9 @@ function NavBar() {
             {/* <div id="toggle-container">
                 <a onClick={toggleMenu}><img id="toggle-icon" src={!showMenu ? <faBars> : xmark} /></a>
             </div> */}
-            <ul onClick={() => setShowMenu(false)} className={showMenu ? "visible" : "hidden"}>
-                <li><a className="nav-link" href="#How_it_works">How It Works</a></li>          
+            <ul onClick={() => setShowMenu(false)} className={showMenu ? "visible" : "hidden"}>         
                 <li><a className="nav-link" href="https://github.com/tigranb2/armenian-dish-classification" target="_blank">Source Code</a></li>
+                <li>{authVal ? <button onClick={logoutClick}>Logout</button> : <button onClick={loginClick}>Login</button>}</li>
             </ul> 
    
         </div>

@@ -1,24 +1,28 @@
-import { React, useState, useEffect } from 'react';
+import { React, useContext, useState, useEffect } from 'react';
 import { useQuery } from 'react-query';
 import moment from 'moment';
 import { momentLocalizer } from 'react-big-calendar';
 
+import { TokenContext } from '../App';
 import AddButton from '../components/AddButton';
 import EventCalendar from '../components/EventCalendar';
 import Stopwatch from '../components/Stopwatch';
-import "./TimePage.css"; // style sheet
 import readEventsRequest from '../api/readEventsRequest';
+import "./TimePage.css"; // style sheet
 
 
 export default function TimePage() {
-
     const [events, setEvents] = useState();
     const [stopwatchIds, setStopwatchIds] = useState([1]);
 
+    // get token
+    const { token } = useContext(TokenContext);
+    const [tokenVal, setToken] = token; 
+
     // fetch events from DB and store to state variable
-    const { isLoading, data: _ } = useQuery(
+    const { isLoading, data: _,  isPreviousData } = useQuery(
         'events', 
-        () => readEventsRequest(),
+        () => readEventsRequest(tokenVal),
         {
             onSuccess: (data) => {setEvents(data);}
         }

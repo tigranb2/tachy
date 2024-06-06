@@ -3,6 +3,10 @@ const mongoose = require('mongoose');
 // specifies schema for an event 
 const expiryTime =  60 * 60 * 24 * 60;
 const eventSchema = new mongoose.Schema({
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "users",
+    },
     title: { // optional name to categorize events
         type: String,
     },

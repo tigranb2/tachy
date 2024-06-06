@@ -1,9 +1,10 @@
 import { API_URL } from "./config"
 
-export default() => {
+export default (token) => {
   return fetch(`${API_URL}/readEvent`, {
     method: 'GET',
     headers: {
+      Authorization: `Bearer ${token}`,
       "Content-Type": 'application/json'
     }
   })

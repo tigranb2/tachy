@@ -1,6 +1,7 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useContext, useState, useEffect, Fragment } from "react";
 import { useMutation, useQueryClient } from 'react-query';
 
+import { TokenContext } from '../App';
 import createEventRequest from '../api/createEventRequest';
 import "./Stopwatch.css";
 
@@ -8,6 +9,12 @@ export default function Stopwatch ({ itemId, stopwatchIds, setStopwatchIds }) {
   const [title, setTitle] = useState(""); // stores stopwatch title
   const [time, setTime] = useState(0); // stores stopwatch time
   const [startTime, setStartTime] = useState(0); // start time at epoch
+
+  // get token
+  const { token } = useContext(TokenContext);
+  const [tokenVal, setToken] = token; 
+
+  const queryClient = useQueryClient(); // for invalidating queries
 
   // tracks whether stopwatch is running
   const [isRunning, setIsRunning] = useState(false);
@@ -35,13 +42,12 @@ export default function Stopwatch ({ itemId, stopwatchIds, setStopwatchIds }) {
     setIsRunning(!isRunning);
   };
 
-   // Method to start timer
-   const start = () => {
+  // Method to start timer
+  const start = () => {
     setStartTime(Date.now()); // save time since epoch from timer start
     pauseUnpause();
   };
 
-  const queryClient = useQueryClient();
 
   // API call to create event given timer start and end times
   // invalidates local cache after compeletion
@@ -64,7 +70,7 @@ export default function Stopwatch ({ itemId, stopwatchIds, setStopwatchIds }) {
         startTime: startDate,
         endTime: endDate,
       }
-      return createEventRequest(newEvent);
+      return createEventRequest(newEvent, tokenVal);
     },
     {
       onSettled: () => {

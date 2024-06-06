@@ -13,7 +13,9 @@
     "react": "^18.2.0",
     "react-big-calendar": "^1.8.5",
     "react-dom": "^18.2.0",
-    "react-modal": "^3.16.1"
+    "react-modal": "^3.16.1",
+    "react-router-dom": "^6.23.1",
+    "universal-cookie": "^7.1.4"
   },
   "devDependencies": {
     "@types/react": "^18.2.43",
