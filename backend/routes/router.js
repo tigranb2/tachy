@@ -12,10 +12,10 @@ dotenv.config(); // use .env
 
 
 router.options("/", function(req, res, next){
-    res.header('Access-Control-Allow-Origin', 'https://tachy.netlify.app');
-    res.header('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
-    res.header("Access-Control-Allow-Credentials", "true")
+    // res.header('Access-Control-Allow-Origin', 'https://tachy.netlify.app');
+    // res.header('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
+    // res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
+    // res.header("Access-Control-Allow-Credentials", "true")
     res.status(200).end();
   });
 
