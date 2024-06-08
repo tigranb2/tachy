@@ -12,7 +12,7 @@ dotenv.config(); // use .env
 
 const app = express();
 app.use(cors({
-    origin : `http://tachy.netlify.app`, // frontend url
+    origin : `https://tachy.netlify.app`, // frontend url
     credentials: true, // accept cookies
 }));
 app.use(morgan('tiny'));
