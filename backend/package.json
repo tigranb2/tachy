@@ -4,7 +4,7 @@
   "description": "TimeIn backend",
   "main": "index.js",
   "scripts": {
-    "start": "node src/server.js"
+    "start": "node api/index.js"
   },
   "author": "",
   "license": "ISC",
