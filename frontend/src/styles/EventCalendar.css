@@ -1,0 +1,98 @@
+#calendarContainer {
+    width: 50%;
+    background-color: var(--site-bg-dm-muted);
+    color: var(--text-dm);
+    overflow: hidden;
+    margin: 1rem;
+    border: 3px var(--site-accent-color-2) solid;
+}
+
+.rbc-calendar {
+    font-family: Arial, Helvetica, sans-serif;
+    border: 0;
+    height: calc(100vh - var(--nav-height) - 2rem - 6px);
+}
+
+.rbc-today {
+    background-color: var(--site-bg-dm-muted); 
+}
+
+.rbc-allday-cell {
+    display: none !important;
+}
+
+.rbc-time-view {
+    border: 0
+}
+
+.popupHeader {
+    display: flex;
+    justify-content: space-between;
+}
+.popupTitle {
+    display:inline-block;
+    align-self: center;
+    margin: 0;
+}
+
+.closePopup {
+    font-size: 1.5em;
+}
+
+.popupTimes {
+    margin-top: 5px;
+    font-size: small;
+    font-weight: 200;
+}
+
+.deleteEventContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: -10px;
+
+}
+.deleteEventButton {
+    border: 1px var(--site-accent-color-2) solid;
+    background-color: transparent;
+    color: var(--text-dm);
+    font-weight: 600;
+}
+.deleteEventButton:hover {
+    background-color: var(--site-accent-color-2);
+    cursor: pointer;
+}
+
+/* Border colors */
+.rbc-time-content, .rbc-timeslot-group, .rbc-time-slot, .rbc-day-slot, .rbc-time-content > * + * > * {
+    border-color: var(--site-accent-color-2) !important;
+    border-left-color: var(--site-accent-color-2) !important;
+    border-top-color: var(--site-accent-color-2) !important;
+}
+.rbc-label {
+    color: var(--text-dm);
+}
+.rbc-event, .rbc-current-time-indicator {
+    background-color: var(--site-accent-color-1)
+}
+
+/* Mobile formatting */
+@media (max-width: 801px) {
+    #calendarContainer {
+        width: auto;
+        background-color: var(--site-bg-dm-muted);
+        color: var(--text-dm);
+        overflow: scroll;
+        /* overflow-y: hidden; */
+        margin: 1rem;
+        border: 0;
+    }
+    .rbc-calendar {
+        width: 100%;
+        font-family: Arial, Helvetica, sans-serif;
+        border: 3px var(--site-accent-color-2) solid;
+        max-height: calc(100vh - var(--nav-height) - 2rem - 6px);
+
+    }
+}

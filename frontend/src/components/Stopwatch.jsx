@@ -3,9 +3,9 @@ import { useMutation, useQueryClient } from 'react-query';
 
 import { TokenContext } from '../App';
 import createEventRequest from '../api/createEventRequest';
-import "./Stopwatch.css";
+import "../styles/Stopwatch.css";
 
-export default function Stopwatch ({ itemId, stopwatchIds, setStopwatchIds }) {
+export default function Stopwatch ({ itemId, stopwatchIds, setStopwatchIds, stopwatchsActive, setStopwatchsActive }) {
   const [title, setTitle] = useState(""); // stores stopwatch title
   const [time, setTime] = useState(0); // stores stopwatch time
   const [startTime, setStartTime] = useState(0); // start time at epoch
@@ -45,6 +45,7 @@ export default function Stopwatch ({ itemId, stopwatchIds, setStopwatchIds }) {
   // Method to start timer
   const start = () => {
     setStartTime(Date.now()); // save time since epoch from timer start
+    setStopwatchsActive(stopwatchsActive + 1);
     pauseUnpause();
   };
 
@@ -59,9 +60,7 @@ export default function Stopwatch ({ itemId, stopwatchIds, setStopwatchIds }) {
       endDate.setUTCMilliseconds(startTime+(time*10))
       
       // reset timer
-      setStartTime(0);
-      setTime(0);
-      setIsRunning(false);
+      reset()
 
       // create event and upload to database
       const newEvent = {
@@ -82,6 +81,7 @@ export default function Stopwatch ({ itemId, stopwatchIds, setStopwatchIds }) {
   // Method to set timer back to 0
   const reset = () => {
     setTime(0);
+    setStopwatchsActive(stopwatchsActive - 1);
     setIsRunning(false);
   };
 
@@ -130,6 +130,22 @@ export default function Stopwatch ({ itemId, stopwatchIds, setStopwatchIds }) {
             ? <button className="stopwatchButton left" onClick={start}>
                 START
               </button>
+            : <button className="stopwatchButton left" onClick={reset}>
+                RESET
+              </button>
+        }
+        <button className="stopwatchButton right" disabled={time == 0 ? true : false} onClick={createEvent}>
+              SAVE
+        </button>
+
+        {
+          // deprecated pause logic
+        }
+        {/* {
+          time == 0 
+            ? <button className="stopwatchButton left" onClick={start}>
+                START
+              </button>
             : <button className="stopwatchButton left" onClick={pauseUnpause}>
               {
               isRunning
@@ -137,8 +153,8 @@ export default function Stopwatch ({ itemId, stopwatchIds, setStopwatchIds }) {
                 : "RESUME"
               }
             </button>
-        }
-        {
+        } */}
+        {/* {
           time == 0
             ? <button className="stopwatchButton right" disabled onClick={createEvent}>
               SAVE
@@ -150,7 +166,7 @@ export default function Stopwatch ({ itemId, stopwatchIds, setStopwatchIds }) {
                 SAVE
               </button>
             </Fragment>
-        }
+        } */}
       </div>
     </div>
   );

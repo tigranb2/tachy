@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import Cookies from 'universal-cookie';
+import { Toaster } from 'react-hot-toast'; // notifications
 
 import authRequest from './api/authRequest';
 import NavBar from './components/NavBar';
@@ -8,7 +9,8 @@ import LandingPage from './pages/LandingPage';
 import TimePage from './pages/TimePage';
 import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
-import './App.css';
+import LoadingPage from './pages/LoadingPage';
+import './styles/App.css';
 
 export const TokenContext = React.createContext(null);
 
@@ -17,7 +19,8 @@ const RootPage = () => {
   const [authVal, _] = auth
 
   // set page to loading until authentication has been attempted
-  return authVal == undefined ? <p>Loading...</p> 
+  return authVal == undefined 
+    ? <LoadingPage />
     : authVal ? <TimePage /> : <LandingPage/>;
 };
 
@@ -53,6 +56,7 @@ function App( ) {
           <header>
             <NavBar />
           </header>
+            <Toaster position="top-center" toastOptions={{duration: 2000, style: {fontFamily: 'Arial, Helvetica, sans-serif', fontSize: "0.9rem"}}}  />
           <Routes>
             <Route
               path="/"

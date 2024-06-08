@@ -34,13 +34,13 @@ router.post('/register', async (req, res) => {
 
         // check for password security
         if (!password || password.length < 8 || password.length > 24) {
-            throw new Error('Password should be between 8 to 24 characters in length')
+            throw new Error('Password must be 8 to 24 characters in length')
         }
 
         // check if user's email has already been registered
         const doesExist = await UserModel.findOne({email});
         if (doesExist) {
-            throw new Error('Email is already in use')
+            throw new Error('Email already in use')
         }
 
         // hash the password for extra security
@@ -55,7 +55,7 @@ router.post('/register', async (req, res) => {
         user.save()
             .then((newUser) => res.json(newUser))
     } catch(err) {
-        res.json({ error: err});
+        res.json({error: err.message});
     }
 }); // register user in DB
 
@@ -82,8 +82,7 @@ router.post('/login', async (req, res) => {
             throw new Error('Email and password do not match')
         }
     } catch(err) {
-        console.log("hi", err)
-        res.status(401).json({ error: err});
+        res.status(401).json({ error: err.message});
     }
 }); // login user in DB
 
@@ -152,7 +151,7 @@ router.delete('/deleteEvent/:id', isAuthorized, async (req, res) => {
         event.deleteOne()
             .then((event) => res.json(event))
     } catch(err) {
-        res.json(err)
+        res.json(err.message)
     }
 }); // delete event from DB
 

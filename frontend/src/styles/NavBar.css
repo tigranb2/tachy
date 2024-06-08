@@ -3,7 +3,6 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    background-color: red;
 }
 
 #logo-container, ul, #toggle-container, a {
@@ -17,11 +16,30 @@
 }
 
 #logo {
-    height: 45%;
+    height: 75%;
+}
+#logo:hover {
+    cursor: pointer;
 }
 
 #toggle-icon {
     height: 45%;
+}
+
+.loginLogout {
+    background-color: transparent;
+    border: 1px var(--text-dm) solid;
+    color: var(--text-dm);
+    font-size: 1.0rem;
+    border-radius: 5px;
+    padding-inline: 10px;
+    padding-block: 5px;
+}
+.loginLogout:hover {
+    background-color: var(--text-dm);
+    color: var(--site-accent-color-1);
+    font-size: 1.0rem;
+    cursor: pointer;
 }
 
 ul, #toggle-container {
@@ -38,7 +56,7 @@ ul {
 li {
     list-style: none;
 }
-
+/* 
 @media (min-width: 800px) {
     #toggle-container {
         display: none
@@ -65,4 +83,4 @@ li {
     .nav-link {
         padding: 5px 0;
     }
-}
+} */

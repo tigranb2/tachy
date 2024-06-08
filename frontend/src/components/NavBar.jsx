@@ -4,7 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 
 import { TokenContext } from '../App';
-import "./NavBar.css" // stylesheet
+import logo from "../assets/tachy-logo.svg" // site logo 
+import "../styles/NavBar.css" // stylesheet
 
 
 function NavBar() {
@@ -33,20 +34,21 @@ function NavBar() {
         setToken(undefined)
         cookies.remove('token')
         queryClient.removeQueries('events')
+        window.onbeforeunload = () => true
         navigate('/', { replace: true })
     };
 
     return (
         <div id="navbar">
             <div id="logo-container">
-                <p> logo </p>
+                <img id="logo" onClick={() => navigate('/', { replace: true })} src={logo}/>
             </div>
             {/* <div id="toggle-container">
                 <a onClick={toggleMenu}><img id="toggle-icon" src={!showMenu ? <faBars> : xmark} /></a>
             </div> */}
             <ul onClick={() => setShowMenu(false)} className={showMenu ? "visible" : "hidden"}>         
-                <li><a className="nav-link" href="https://github.com/tigranb2/armenian-dish-classification" target="_blank">Source Code</a></li>
-                <li>{authVal ? <button onClick={logoutClick}>Logout</button> : <button onClick={loginClick}>Login</button>}</li>
+                {/* <li><a className="nav-link" href="https://github.com/tigranb2/armenian-dish-classification" target="_blank">Source Code</a></li> */}
+                <li>{authVal ? <button className="loginLogout" onClick={logoutClick}>Logout</button> : <button className="loginLogout" onClick={loginClick}>Login</button>}</li>
             </ul> 
    
         </div>

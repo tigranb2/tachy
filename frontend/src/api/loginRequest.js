@@ -12,4 +12,5 @@ export default (user) => {
       password: user.password,
     })
   })
+    .then(response => response.json());
 }

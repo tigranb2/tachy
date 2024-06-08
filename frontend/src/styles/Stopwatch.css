@@ -3,12 +3,14 @@
 }
 
 .stopwatchContainer {
-    background-color: var(--container-color);
+    background-color: var(--site-bg-dm);
     border: var(--site-accent-color-2) solid;
     margin-bottom: 0.7vw;
     flex-direction: column;
     justify-content: space-between;
     height: 24vh;
+    color: var(--text-dm);
+    box-sizing: border-box !important;
 }
 
 .stopwatchTop {
@@ -22,6 +24,7 @@
     border: 0;
     border-bottom: 1px solid gray;
     background: none;
+    color: var(--text-dm);
 }
 
 .stopwatchTitle:focus {
@@ -43,8 +46,8 @@
 .stopwatchButton {
     border-radius: 0;
     width: 100%;
-    background-color: var(--container-color);
-    color: var(--site-accent-color-2);
+    background-color: var(--site-bg-dm);
+    color: var(--text-dm);
     border-top: 3px solid var(--site-accent-color-2);
     border-bottom: 0;
     font-weight: 800;
@@ -68,8 +71,8 @@
 
 .stopwatchButton:disabled {
     cursor: not-allowed;
-    background-color: rgb(229, 229, 229);
-    color: grey;
+    background-color: var(--site-bg-dm-muted);
+    color: rgba(255, 255, 255, 0.23);
 }
 
 .stopwatchButton:hover {
@@ -80,6 +83,7 @@
 .button:focus {
     background-color: var(--site-accent-color-2);
     color: var(--container-color);
+    cursor: pointer;
 }
 
 .stopwatchButton:focus {
@@ -88,4 +92,18 @@
 
 .removeStopwatch {
     font-size: 2em;
+}
+
+/* Mobile formatting */
+@media (max-width: 801px) {
+    .stopwatchContainer {
+        width: 100%;
+        margin-bottom: 2vw;
+        height: 28vh;
+    }
+    .stopwatchButtons, .stopwatchTop {
+        display: flex;
+        height: 10vh;
+    }
+
 }

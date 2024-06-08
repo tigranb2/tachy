@@ -1,22 +1,28 @@
 :root {
   /* Variables */
-  --site-bg-color: #FAFAFA;
   --container-color: #f8f8f8;
-  --site-accent-color-1: #E96F03;
-  --site-accent-color-2: #213547;
+  --site-accent-color-1: #3163E0;
+  --site-accent-color-2:#565656;
+  --site-accent-color-3: #2750b6;
   --navigation-color: #dcdcdc;
-  --nav-height: 58px;
+  --nav-height: 68px;
+
+  --site-bg-dm: #1f1f1f;
+  --site-bg-dm-muted: #28292a;
+  --text-dm: #e8e8e8;
+
+  background-color: var(--site-bg-dm);
 }
 
-body {
+/* body {
   overflow: hidden;
-}
+} */
 
 .mainContainer {
   text-align: center;
   width: 40vw;
   border-width: 3px;
-  box-sizing: content-box;
+  /* box-sizing: content-box; */
   display: flex;
 }
 
@@ -29,10 +35,20 @@ body {
   justify-content: center;
   align-items: center;
   display: flex;
+  color: gray
 }
 .closeButton:hover {
-  color: gray;
+  color: var(--text-dm);
+  cursor: pointer;
 }
+
+/* Mobile formatting */
+@media (max-width: 801px) {
+  .mainContainer {
+    width: 100%;
+  }
+}
+
 
 /* :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;

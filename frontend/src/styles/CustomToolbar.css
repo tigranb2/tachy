@@ -1,0 +1,50 @@
+.customCalendarToolbar
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 40px;
+    align-items: center;
+    padding: 0 1% 0 1%;
+    border-bottom: 0;
+    background-color: var(--site-bg-dm);
+    color: var(--text-dm)
+}
+
+.toolbarContainer {
+    display: flex;
+    align-items: center;
+}
+.toolbarContainer button{
+    display: flex;
+    align-items: center;
+    background-color: transparent;
+    color: var(--text-dm);
+    border: 0;
+    font-size: 1rem;
+}
+.toolbarContainer button:hover{
+    color: var(--text-dm);
+    cursor: pointer;
+    background-color: var(--site-accent-color-1);
+    border-radius: 10px;
+}
+
+.toolbarContainer button:disabled{
+    color: var(--site-accent-color-2) !important;
+}
+.toolbarContainer button:disabled:hover{
+    background-color: transparent !important;
+    cursor: not-allowed !important;
+}
+
+#navPrev, #navNext {
+    font-weight: 900;
+}
+#navToday:hover {
+    padding-top: 4px !important;
+    padding-bottom: 4px !important;
+}
+#navPrev {
+    transform: scaleX(-1);
+}

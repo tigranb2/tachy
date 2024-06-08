@@ -3,7 +3,7 @@ import { Navigate } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 
-import './CustomToolbar.css'
+import '../styles/CustomToolbar.css'
 const CustomToolbar = (props) => {
     const [currentDate, setCurrentDate] = useState(new Date());
     const [zoom, setZoom] = useState(7); // initial zoom level
@@ -41,32 +41,43 @@ const CustomToolbar = (props) => {
         props.onNavigate(Navigate.NEXT);
     };
 
-    const handleZoomChange = (event) => {
-        setZoom(event.target.value);
-        // You'll likely need custom logic to update the calendar view based on zoom
+
+    // zoom in the calendar
+    const handleZoomIn = () => {
+        setZoom(zoom + 1);
     };
+
+    // zoom out the calendar
+    const handleZoomOut = () => {
+        setZoom(zoom - 1);
+    };
+
 
     return (
         <div className='customCalendarToolbar'>
-            <div className="dateNavigation">    
-                <button onClick={handleToday}>Today</button>
-                <button onClick={handlePrev}>Previous</button>
-                <button onClick={handleNext}>Next</button>
+            <div className="toolbarContainer">    
+                <button id="navToday" onClick={handleToday}>Today</button>
+                <button id="navPrev" onClick={handlePrev}>❯</button>
+                <button id="navNext" onClick={handleNext}>❯</button>
             </div>
             <div className="currentDate">
                 {moment(currentDate).format('MMMM D, YYYY')}
             </div>
-            <div className="zoomControl">
-                Zoom: 
-                <input
-                    className="zoomControlBar"
-                    type="range"
-                    min="2"
-                    max="14"
-                    step="1"
-                    value={zoom}
-                    onChange={handleZoomChange}
-                />
+            <div className="toolbarContainer"> 
+                <button 
+                    disabled={zoom == 2 ? true : false}
+                    onClick={zoom == 2 ? {} : handleZoomOut}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="1.3rem" height="1.3rem" viewBox="0 0 24 24">
+                        <path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 10h6m2 5l6 6m-11-4a7 7 0 1 1 0-14a7 7 0 0 1 0 14" />
+                    </svg>
+                </button>
+                <button 
+                    disabled={zoom == 14 ? true : false}
+                    onClick={zoom == 14 ? {} : handleZoomIn}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="1.3rem" height="1.3rem" viewBox="0 0 24 24">
+                        <path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 10h3m0 0h3m-3 0V7m0 3v3m5 2l6 6m-11-4a7 7 0 1 1 0-14a7 7 0 0 1 0 14" />
+                    </svg>
+                </button>
             </div>
         </div>
     );

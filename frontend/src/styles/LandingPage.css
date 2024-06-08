@@ -1,0 +1,100 @@
+#landingBackground {
+    background:
+        linear-gradient(
+          rgba(0, 0, 0, 0.5), 
+          rgba(0, 0, 0, 0.5)
+        ),
+        url("../assets/landing-page-bg.jpg"); /* Olli Kilpi */
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: calc(100vh - var(--nav-height));
+}
+#landingContainer {
+    text-align: center;
+    color: var(--text-dm);
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: top;
+    align-items: center;
+    min-height: 100%;
+    transform: translateY(15vh);
+    margin-inline: 40vh;
+}
+
+#landingHeader {
+    font-size: 4rem;
+    margin-bottom: 15px;
+}
+
+.landingText {
+    font-size: 1.2em;
+    margin-bottom: 30px;
+}
+
+
+.landingButton {
+    background-color: var(--site-accent-color-1); /* Blue */
+    color: var(--text-dm);
+    padding: 12px 25px;
+    font-size: 1.1em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-left: 10px;
+    margin-right: 10px;
+    font-weight: 600;
+}
+
+.landingButton:hover {
+    background-color: var(--site-accent-color-3); /* Darker blue on hover */
+}
+
+@media (max-width: 1201px) {
+    #landingContainer {
+        transform: translateY(10vh);
+        margin-inline: 20vh;
+    }
+    #landingHeader {
+        font-size: 3rem;
+        margin-bottom: 15px;
+    }
+    
+    .landingText {
+        font-size: 1.1em;
+        margin-bottom: 30px;
+    }
+    
+  }
+
+@media (max-width: 801px) {
+    #landingContainer {
+        transform: translateY(5vh);
+        margin-inline: 0;
+        height: 100%;
+    }
+    
+    #landingHeader {
+      max-width: 400px;
+      font-size: 2.5rem;
+    }
+    .landingText {
+        font-size: 1em;
+        max-width: 350px;
+        margin-bottom: 30px;
+    }
+    .landingButton {
+        background-color: var(--site-accent-color-1); /* Blue */
+        color: var(--text-dm);
+        padding: 10px 15px;
+        font-size: 0.8em;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        margin-left: 10px;
+        margin-right: 10px;
+        font-weight: 600;
+    }
+  }

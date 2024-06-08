@@ -1,4 +1,4 @@
-import "./AddButton.css";
+import "../styles/AddButton.css";
 
 export default function AddButton({ stopwatchIds, setStopwatchIds}) {
     return (

@@ -9,7 +9,7 @@ import moment from 'moment';
 import { TokenContext } from '../App';
 import CustomToolbar from './CustomToolbar';
 import deleteEventRequest from '../api/deleteEventRequest';
-import "./EventCalendar.css";
+import "../styles/EventCalendar.css";
 
 export default function EventCalendar({
   localizer,
@@ -56,7 +56,7 @@ export default function EventCalendar({
 
   const modalStyles = {
     overlay: {
-      backgroundColor: 'rgba(0, 0, 0, 0.2)',
+      backgroundColor: 'rgba(0, 0, 0, 0.4)',
       zIndex: 100,
     },
     content: {
@@ -67,6 +67,9 @@ export default function EventCalendar({
       marginRight: '-50%',
       transform: 'translate(-50%, -50%)',
       fontFamily: "Arial",
+      backgroundColor: '#28292a',
+      color: '#e8e8e8',
+      borderColor: "#565656"
     },
   };
 
@@ -86,9 +89,11 @@ export default function EventCalendar({
             <p className="popupTimes">
               {moment(selectedEvent.start).format("MMMM DD, YYYY, hh:mm A")} – {moment(selectedEvent.end).format("MMMM DD, YYYY, hh:mm A")}
             </p>
-            <button  onClick={deleteEvent}>
-              DELETE 
-            </button>
+            <div className="deleteEventContainer">
+              <button className="deleteEventButton" onClick={deleteEvent}>
+                DELETE 
+              </button>
+            </div>
         </Modal>}
         <Calendar
           components={{

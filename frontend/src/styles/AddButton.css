@@ -4,16 +4,17 @@
     font-size: 2.6em;
     text-align: center;
     vertical-align: middle;
-    color: gray;
-    border-color: gray;
-    background-color: white;
+    color: var(--site-accent-color-2);
+    border-color: var(--site-accent-color-2);
+    background-color: var(--site-bg-dm);
     height: 12vh;
     justify-content: center;
     align-items: center;
 }
 
 .addButton:hover {
-    color: var(--site-accent-color-2);
-    border-color: var(--site-accent-color-2);
+    border-color: var(--text-dm);
+    color: var(--text-dm);
+    cursor: pointer;
 }
 
