@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const morgan = require('morgan');
 
 
-const router = require('./router');
+const router = require('./routes/router');
 
 dotenv.config(); // use .env
 
