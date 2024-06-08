@@ -9,12 +9,12 @@ const UserModel = require("./models/UserModel")
 const router = express.Router();
 dotenv.config(); // use .env
 
-router.options("/login", function(req, res, next){
+router.options("/*", function(req, res, next){
     res.header('Access-Control-Allow-Origin', 'https://tachy.netlify.app');
     res.header('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
     res.header("Access-Control-Allow-Credentials", "true")
-    res.send(200);
+    res.status(200).send();
   });
 
 // get token from header and verify authorization
