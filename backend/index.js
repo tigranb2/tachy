@@ -12,7 +12,7 @@ dotenv.config(); // use .env
 
 const app = express();
 app.use(cors({
-    origin : `https://tachy.netlify.app`, // frontend url
+    origin : `https://tachy.pages.dev`, // frontend url
     credentials: true, // accept cookies
     optionsSuccessStatus: 200 // Set the status code for OPTIONS requests (some browsers require this)
 }));
