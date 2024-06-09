@@ -27,4 +27,7 @@ app.use(router);
 mongoose.connect(process.env.MONGO_URI).then(() => {
     console.log("connected to mongo")
     app.listen(3000);
+}).catch((err) => {
+    console.log({ err });
+    process.exit(1);
 });
