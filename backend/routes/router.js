@@ -88,7 +88,7 @@ router.post('/login', async (req, res) => {
                 if (err) {
                     throw err
                 }
-                res.cookie('token', token, { sameSite: 'none', secure: 'true', domain: 'tachy.onrender.com' }).json(user)
+                res.cookie('token', token, { sameSite: 'none', secure: 'true', domain: 'tachy-api-3srv.onrender.com' }).json(user)
             })
         } else {
             throw new Error('Email and password do not match')
