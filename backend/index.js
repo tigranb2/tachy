@@ -21,9 +21,10 @@ app.use(express.json());
 app.use(cookieParser())
 app.use(express.urlencoded({extended: false}))
 
-app.use('/api', router);
+app.use(router);
 
 // connect to MongoDB
 mongoose.connect(process.env.MONGO_URI).then(() => {
+    console.log("connected to mongo")
     app.listen(3000);
 });
