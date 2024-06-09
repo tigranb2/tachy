@@ -92,7 +92,7 @@ router.post('/login', async (req, res) => {
                     sameSite: 'none', 
                     secure: 'true', 
                     domain: 'tachy-api-3srv.onrender.com',
-                    maxAge: 86400 * 7,
+                    expires: DateTime.UtcNow.AddDays(7),
                  }).json(user)
             })
         } else {
