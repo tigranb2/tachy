@@ -88,7 +88,7 @@ router.post('/login', async (req, res) => {
                 if (err) {
                     throw err
                 }
-                res.cookie('token', token, { sameSite: 'none' }).json(user)
+                res.cookie('token', token, { sameSite: 'none', secure: 'true' }).json(user)
             })
         } else {
             throw new Error('Email and password do not match')
