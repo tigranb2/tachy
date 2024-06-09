@@ -2,7 +2,7 @@ const cors = require('cors');
 const express = require('express');
 const bcrypt = require('bcrypt'); // For password hashing
 const dotenv = require('dotenv');
-const jwt = require('jsonwebtoken'); 
+const jwt = require('jsonwebtoken');
 
 const EventModel = require('./models/EventModel')
 const UserModel = require("./models/UserModel")
@@ -23,19 +23,19 @@ dotenv.config(); // use .env
 isAuthorized = (req, res, next) => {
     const authHeader = req.headers.authorization;
     if (!authHeader) {
-    res.status(401).send('invalid credentials');
+        res.status(401).send('invalid credentials');
     } else {
-    const token = authHeader.split(' ')[1];
+        const token = authHeader.split(' ')[1];
 
-    jwt.verify(token, `${process.env.JWT_SECRET_KEY}`, (err, decoded) => {
-        if (err) {
-            res.status(403).send('invalid credentials');
-        } else {
-            req.user = decoded; // store user
-            next();
-        }
-    });
-}
+        jwt.verify(token, `${process.env.JWT_SECRET_KEY}`, (err, decoded) => {
+            if (err) {
+                res.status(403).send('invalid credentials');
+            } else {
+                req.user = decoded; // store user
+                next();
+            }
+        });
+    }
 }
 
 router.get("/", (req, res) => res.send("Server running"));
@@ -50,7 +50,7 @@ router.post('/register', async (req, res) => {
         }
 
         // check if user's email has already been registered
-        const doesExist = await UserModel.findOne({email});
+        const doesExist = await UserModel.findOne({ email });
         if (doesExist) {
             throw new Error('Email already in use')
         }
@@ -66,8 +66,8 @@ router.post('/register', async (req, res) => {
 
         user.save()
             .then((newUser) => res.json(newUser))
-    } catch(err) {
-        res.json({error: err.message});
+    } catch (err) {
+        res.json({ error: err.message });
     }
 }); // register user in DB
 
@@ -76,15 +76,15 @@ router.post('/login', async (req, res) => {
         const { email, password } = req.body;
 
         // check user exists
-        const user = await UserModel.findOne({email});
+        const user = await UserModel.findOne({ email });
         if (!user) {
             throw new Error('Email not registered')
         }
 
         // check if passwords match
         const isSame = await bcrypt.compare(password, user.password)
-        if (isSame){
-            jwt.sign({email: user.email, id: user._id, name: user.name}, `${process.env.JWT_SECRET_KEY}`, {}, (err, token) => {
+        if (isSame) {
+            jwt.sign({ email: user.email, id: user._id, name: user.name }, `${process.env.JWT_SECRET_KEY}`, {}, (err, token) => {
                 if (err) {
                     throw err
                 }
@@ -93,16 +93,16 @@ router.post('/login', async (req, res) => {
         } else {
             throw new Error('Email and password do not match')
         }
-    } catch(err) {
-        res.status(401).json({ error: err.message});
+    } catch (err) {
+        res.status(401).json({ error: err.message });
     }
 }); // login user in DB
 
 router.post('/auth', (req, res) => {
     const token = req.body.token;
     jwt.verify(token, `${process.env.JWT_SECRET_KEY}`, (err, _) => {
-        if(err){ // invalid token
-            return res.status(498).json({ error: "Invalid token"})
+        if (err) { // invalid token
+            return res.status(498).json({ error: "Invalid token" })
         } else {
             return res.status(200).json("authenticated");
         }
@@ -148,7 +148,7 @@ router.delete('/deleteEvent/:id', isAuthorized, async (req, res) => {
         const event = await EventModel.findById({ _id: id }) // search for event
 
         // throw error if event not found
-        if(!event) {
+        if (!event) {
             res.status(404)
             throw new Error('Event not found')
         }
@@ -162,7 +162,7 @@ router.delete('/deleteEvent/:id', isAuthorized, async (req, res) => {
         // delete event
         event.deleteOne()
             .then((event) => res.json(event))
-    } catch(err) {
+    } catch (err) {
         res.json(err.message)
     }
 }); // delete event from DB
