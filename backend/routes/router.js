@@ -38,6 +38,10 @@ isAuthorized = (req, res, next) => {
 }
 }
 
+router.get('/test', async (req, res) => {
+    res.json({message: "Hello world"})
+})
+
 router.post('/register', async (req, res) => {
     try {
         const { name, email, password } = req.body;
