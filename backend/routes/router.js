@@ -38,9 +38,7 @@ isAuthorized = (req, res, next) => {
 }
 }
 
-router.get('/test', async (req, res) => {
-    res.json({message: "Hello world"})
-})
+router.get("/", (req, res) => res.send("Express on Vercel"));
 
 router.post('/register', async (req, res) => {
     try {
