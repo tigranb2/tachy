@@ -23,10 +23,12 @@ app.use(express.urlencoded({extended: false}))
 
 app.use(router);
 
+const port = process.env.PORT || 4000;
+
 // connect to MongoDB
 mongoose.connect(process.env.MONGO_URI).then(() => {
     console.log("connected to mongo")
-    app.listen(3000);
+    app.listen(port);
 }).catch((err) => {
     console.log({ err });
     process.exit(1);
