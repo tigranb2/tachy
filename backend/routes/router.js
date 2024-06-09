@@ -85,10 +85,15 @@ router.post('/login', async (req, res) => {
         const isSame = await bcrypt.compare(password, user.password)
         if (isSame) {
             jwt.sign({ email: user.email, id: user._id, name: user.name }, `${process.env.JWT_SECRET_KEY}`, {}, (err, token) => {
-                if (err) {
+                if (err) { 
                     throw err
                 }
-                res.cookie('token', token, { sameSite: 'none', secure: 'true', domain: 'tachy-api-3srv.onrender.com' }).json(user)
+                res.cookie('token', token, { 
+                    sameSite: 'none', 
+                    secure: 'true', 
+                    domain: 'tachy-api-3srv.onrender.com',
+                    maxAge: 86400 * 7,
+                 }).json(user)
             })
         } else {
             throw new Error('Email and password do not match')
