@@ -38,7 +38,7 @@ isAuthorized = (req, res, next) => {
     }
 }
 
-router.get("/", (req, res) => res.send("Server running"));
+// router.get("/", (req, res) => res.send("Server running"));
 
 router.post('/register', async (req, res) => {
     try {
@@ -88,11 +88,12 @@ router.post('/login', async (req, res) => {
                 if (err) { 
                     throw err
                 }
+                console.log("hi, ", DateTime.UtcNow.AddDays(7))
                 res.cookie('token', token, { 
                     sameSite: 'none', 
                     secure: 'true', 
                     domain: 'tachy-api-3srv.onrender.com',
-                    expires: DateTime.UtcNow.AddDays(7),
+                    // expires: DateTime.UtcNow.AddDays(7),
                  }).json(user)
             })
         } else {
