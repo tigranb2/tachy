@@ -45,6 +45,7 @@ export default function Stopwatch ({ itemId, stopwatchIds, setStopwatchIds, stop
   // Method to start timer
   const start = () => {
     setStartTime(Date.now()); // save time since epoch from timer start
+    console.log(stopwatchesActive)
     setStopwatchesActive(stopwatchesActive + 1);
     pauseUnpause();
   };
