@@ -89,16 +89,12 @@ router.post('/login', async (req, res) => {
                     throw err
                 }
                 
-                const now = new Date();
-                console.log("now ", now)
-                now.setDate(now.getDate() + 7); // 1 week expiration time
-                console.log('expiry ', expiresDate)
+                // set expiration time to 1 week (in ms)
                 res.cookie('token', token, { 
                     sameSite: 'none', 
                     secure: 'true', 
                     domain: 'tachy-api-3srv.onrender.com',
-                    expires: new Date(Date.now() + 1000*60*60*24),
-                    // expires: now,
+                    maxAge: 604800000,
                  }).json(user)
             })
         } else {
