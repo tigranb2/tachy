@@ -56,6 +56,7 @@ export default function Stopwatch ({ itemId, stopwatchIds, setStopwatchIds, stop
     setIsRunning(false);
   };
 
+
   // API call to create event given timer start and end times
   // invalidates local cache after compeletion
   const { mutate: createEvent } = useMutation(

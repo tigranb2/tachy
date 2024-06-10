@@ -12,9 +12,10 @@ import Stopwatch from '../components/Stopwatch';
 import "../styles/TimePage.css"; // style sheet
 
 
-export default function TimePage({ stopwatchesActive, setStopwatchesActive }) {
+export default function TimePage() {
     const [events, setEvents] = useState();
     const [stopwatchIds, setStopwatchIds] = useState([1]);
+    const [stopwatchesActive, setStopwatchesActive] = useState(0);
 
     // get token
     const { token } = useContext(TokenContext);
@@ -38,6 +39,25 @@ export default function TimePage({ stopwatchesActive, setStopwatchesActive }) {
             });
         }
     }, [isLoading]);
+
+    // prevent users from reloading / closing page while stopwatch is running
+    useEffect(() => {
+        if (stopwatchesActive == 0) { // stopwatch not running, safe to unload
+            return 
+        }
+
+        // stopwatch running
+        const handleBeforeUnload = (event) => {
+            event.preventDefault();
+            return (event.returnValue = '');
+        }
+        window.addEventListener('beforeunload', handleBeforeUnload, { capture: true });
+        // cleanup function handles when component unmounts
+        return () => {
+            window.removeEventListener('beforeunload', handleBeforeUnload, { capture: true });
+            setStopwatchesActive(0)
+        };    
+    }, [stopwatchesActive]);
 
     const localizer = momentLocalizer(moment)
     return (
