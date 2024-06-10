@@ -89,13 +89,7 @@ router.post('/login', async (req, res) => {
                     throw err
                 }
                 
-                // set expiration time to 1 week (in ms)
-                res.cookie('token', token, { 
-                    sameSite: 'none', 
-                    secure: 'true', 
-                    domain: 'tachy-api-3srv.onrender.com',
-                    maxAge: 604800000,
-                 }).json(user)
+                res.json({ token: token })
             })
         } else {
             throw new Error('Email and password do not match')

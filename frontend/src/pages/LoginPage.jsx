@@ -39,7 +39,8 @@ export default function LoginPage() {
                     })
                     toast.error(resp.error)
                 } else { // login succeeded
-                    console.log("Cookies ", cookies.getAll())
+                    // set cookie with 1 week expiration
+                    cookies.set(token, resp.token, { maxAge: 604800000 });
                     setToken(cookies.get("token"))
                     setAuth(true)
                     toast.success("Login successful")

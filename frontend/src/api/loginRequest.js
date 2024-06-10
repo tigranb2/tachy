@@ -3,7 +3,7 @@ import { API_URL } from "./config"
 export default (user) => {
   return fetch(`${API_URL}/login`, {
     method: 'POST',
-    credentials: "include",
+    // credentials: "include",
     headers: {
       "Content-Type": 'application/json',
     },
