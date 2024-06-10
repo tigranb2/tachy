@@ -12,7 +12,7 @@ import Stopwatch from '../components/Stopwatch';
 import "../styles/TimePage.css"; // style sheet
 
 
-export default function TimePage({ stopwatchsActive, setStopwatchsActive }) {
+export default function TimePage({ stopwatchesActive, setStopwatchesActive }) {
     const [events, setEvents] = useState();
     const [stopwatchIds, setStopwatchIds] = useState([1]);
 
@@ -39,24 +39,6 @@ export default function TimePage({ stopwatchsActive, setStopwatchsActive }) {
         }
     }, [isLoading]);
 
-    // prevent users from reloading / closing page while stopwatch is running
-    useEffect(() => {
-        if (stopwatchsActive == 0) { // stopwatch not running, safe to unload
-            return 
-        }
-
-        // stopwatch running
-        const handleBeforeUnload = (event) => {
-            event.preventDefault();
-            return (event.returnValue = '');
-        }
-        window.addEventListener('beforeunload', handleBeforeUnload, { capture: true });
-        // cleanup function handles when component unmounts
-        return () => {
-            window.removeEventListener('beforeunload', handleBeforeUnload, { capture: true });
-        };    
-    }, [stopwatchsActive]);
-
     const localizer = momentLocalizer(moment)
     return (
         isLoading
@@ -70,8 +52,8 @@ export default function TimePage({ stopwatchsActive, setStopwatchsActive }) {
                             itemId={id} 
                             stopwatchIds={stopwatchIds} 
                             setStopwatchIds={setStopwatchIds}
-                            stopwatchsActive={stopwatchsActive}
-                            setStopwatchsActive={setStopwatchsActive}
+                            stopwatchesActive={stopwatchesActive}
+                            setStopwatchesActive={setStopwatchesActive}
                         />
                     ))}
                     {stopwatchIds.length < 3 && <AddButton stopwatchIds={stopwatchIds} setStopwatchIds={setStopwatchIds}/>}

@@ -5,7 +5,7 @@ import { TokenContext } from '../App';
 import createEventRequest from '../api/createEventRequest';
 import "../styles/Stopwatch.css";
 
-export default function Stopwatch ({ itemId, stopwatchIds, setStopwatchIds, stopwatchsActive, setStopwatchsActive }) {
+export default function Stopwatch ({ itemId, stopwatchIds, setStopwatchIds, stopwatchesActive, setStopwatchesActive }) {
   const [title, setTitle] = useState(""); // stores stopwatch title
   const [time, setTime] = useState(0); // stores stopwatch time
   const [startTime, setStartTime] = useState(0); // start time at epoch
@@ -45,10 +45,16 @@ export default function Stopwatch ({ itemId, stopwatchIds, setStopwatchIds, stop
   // Method to start timer
   const start = () => {
     setStartTime(Date.now()); // save time since epoch from timer start
-    setStopwatchsActive(stopwatchsActive + 1);
+    setStopwatchesActive(stopwatchesActive + 1);
     pauseUnpause();
   };
 
+  // Method to set timer back to 0
+  const reset = () => {
+    setTime(0);
+    setStopwatchesActive(stopwatchesActive - 1);
+    setIsRunning(false);
+  };
 
   // API call to create event given timer start and end times
   // invalidates local cache after compeletion
@@ -77,13 +83,6 @@ export default function Stopwatch ({ itemId, stopwatchIds, setStopwatchIds, stop
       },
     }
   );
-
-  // Method to set timer back to 0
-  const reset = () => {
-    setTime(0);
-    setStopwatchsActive(stopwatchsActive - 1);
-    setIsRunning(false);
-  };
 
   // allow user to set name for stopwatch
   const handleUserInput = (event) => {
