@@ -48,3 +48,13 @@
 #navPrev {
     transform: scaleX(-1);
 }
+
+@media (max-width: 381px) {
+    .customCalendarToolbar, .toolbarContainer button {
+        font-size: 0.8rem;
+    }
+    .toolbarContainer svg {
+        height: 1rem;
+        width: 1rem;
+    }
+}  

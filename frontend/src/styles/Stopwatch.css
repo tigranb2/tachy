@@ -25,6 +25,7 @@
     border-bottom: 1px solid gray;
     background: none;
     color: var(--text-dm);
+    border-radius: 0;   
 }
 
 .stopwatchTitle:focus {
@@ -106,4 +107,11 @@
         height: 10vh;
     }
 
+}
+
+/* Mobile formatting */
+@media (max-width: 381px) {
+    .stopwatchContainer {
+        margin-bottom: 4vw;
+    }
 }

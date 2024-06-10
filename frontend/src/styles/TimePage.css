@@ -17,4 +17,11 @@
       margin-top: 2vh;
     }
 }
+
+@media (max-width: 381px) {
+    #timePageContainer {
+      padding-left: 1vh;
+      padding-right: 1vh;
+    }
+}
   

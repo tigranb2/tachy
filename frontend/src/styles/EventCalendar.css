@@ -96,3 +96,9 @@
 
     }
 }
+
+@media (max-width: 801px) {
+    .rbc-label {
+        font-size: 0.8rem;
+    }
+}
