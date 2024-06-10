@@ -47,7 +47,7 @@ function App() {
         return 
     }
 
-    if (!authVal) { // user logged out, update stopwatchesActive
+    if (!auth) { // user logged out, update stopwatchesActive
       setStopwatchesActive(0)
       return
     }
