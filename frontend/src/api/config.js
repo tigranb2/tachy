@@ -1,1 +1,1 @@
-export const API_URL = `https://tachy-chi.vercel.app/`
+export const API_URL = `https://tachy-chi.vercel.app`
