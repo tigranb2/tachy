@@ -88,12 +88,15 @@ router.post('/login', async (req, res) => {
                 if (err) { 
                     throw err
                 }
-                console.log("hi, ", DateTime.UtcNow.AddDays(7))
+                
+                const now = new Date();
+                now.setDate(now.getDate() + 7); 
+                const expiresDate = now.toUTCString(); // Format for cookie
                 res.cookie('token', token, { 
                     sameSite: 'none', 
                     secure: 'true', 
                     domain: 'tachy-api-3srv.onrender.com',
-                    // expires: DateTime.UtcNow.AddDays(7),
+                    expires: expiresDate,
                  }).json(user)
             })
         } else {
