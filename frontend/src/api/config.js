@@ -1,1 +1,1 @@
-export const API_URL = `https://tachy-api-3srv.onrender.com`
+export const API_URL = `https://tachy-chi.vercel.app/`
