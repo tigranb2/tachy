@@ -49,6 +49,7 @@ function App() {
 
     if (!authVal) { // user logged out, update stopwatchesActive
       setStopwatchesActive(0)
+      return
     }
 
     // stopwatch running
