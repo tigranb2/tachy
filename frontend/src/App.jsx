@@ -52,16 +52,16 @@ function App() {
       return
     }
 
-    // stopwatch running
-    const handleBeforeUnload = (event) => {
-        event.preventDefault();
-        return (event.returnValue = '');
-    }
-    window.addEventListener('beforeunload', handleBeforeUnload, { capture: true });
-    // cleanup function handles when component unmounts
-    return () => {
-        window.removeEventListener('beforeunload', handleBeforeUnload, { capture: true });
-    };    
+    // // stopwatch running
+    // const handleBeforeUnload = (event) => {
+    //     event.preventDefault();
+    //     return (event.returnValue = '');
+    // }
+    // window.addEventListener('beforeunload', handleBeforeUnload, { capture: true });
+    // // cleanup function handles when component unmounts
+    // return () => {
+    //     window.removeEventListener('beforeunload', handleBeforeUnload, { capture: true });
+    // };    
   }, [stopwatchsActives]);
 
   const RootPage = () => {
