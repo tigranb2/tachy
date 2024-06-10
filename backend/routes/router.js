@@ -90,13 +90,15 @@ router.post('/login', async (req, res) => {
                 }
                 
                 const now = new Date();
+                console.log("now ", now)
                 now.setDate(now.getDate() + 7); 
                 const expiresDate = now.toUTCString(); // Format for cookie
+                console.log('expiry ', expiresDate)
                 res.cookie('token', token, { 
                     sameSite: 'none', 
                     secure: 'true', 
                     domain: 'tachy-api-3srv.onrender.com',
-                    expires: expiresDate,
+                    // expires: expiresDate,
                  }).json(user)
             })
         } else {
