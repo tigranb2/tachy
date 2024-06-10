@@ -14,8 +14,6 @@ import './styles/App.css';
 
 export const TokenContext = React.createContext(null);
 
-
-
 function App() {
   const cookies = new Cookies(null, { path: '/' })
   const [token, setToken] = useState(cookies.get('token')); // try to get token from cookies
@@ -61,7 +59,7 @@ function App() {
         />
         : <LandingPage />;
   };
-  
+
   return (
     <div className="App">
       <TokenContext.Provider value={{ token: [token, setToken], auth: [auth, setAuth] }}>
