@@ -82,3 +82,18 @@
     cursor: pointer;
     color: lightgray;
 }
+
+
+@media (max-width: 451px) {
+    .loginLogoutForm {
+        width: 250px;
+        padding: 25px;
+    }
+}
+
+@media (max-width: 341px) {
+    .loginLogoutForm {
+        width: 200px;
+        padding: 20px;
+    }
+}
