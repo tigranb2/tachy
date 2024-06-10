@@ -14,26 +14,37 @@ import './styles/App.css';
 
 export const TokenContext = React.createContext(null);
 
+const [stopwatchsActive, setStopwatchsActive] = useState(0);
+
 const RootPage = () => {
-  const { auth }= useContext(TokenContext);
+  const { auth } = useContext(TokenContext);
   const [authVal, _] = auth
 
+  if (stopwatchsActive != 0) { // remove event listener from TimePage
+    window.removeEventListener('beforeunload', handleBeforeUnload, { capture: true });
+  }
+
   // set page to loading until authentication has been attempted
-  return authVal == undefined 
+  return authVal == undefined
     ? <LoadingPage />
-    : authVal ? <TimePage /> : <LandingPage/>;
+    : authVal
+      ? <TimePage
+        stopwatchsActive={stopwatchsActive}
+        setStopwatchsActive={setStopwatchsActive}
+      />
+      : <LandingPage />;
 };
 
-function App( ) {
+function App() {
   const cookies = new Cookies(null, { path: '/' })
   const [token, setToken] = useState(cookies.get('token')); // try to get token from cookies
   const [auth, setAuth] = useState(undefined); // null means token has not been checked
 
   useEffect(() => {
-    if(token) {
+    if (token) {
       authRequest(token)
         .then(response => {
-          if(response.status == 200) {
+          if (response.status == 200) {
             setAuth(true) // set state to authenticated
             return
           } else { // failed auth; remove token in cookies
@@ -43,28 +54,28 @@ function App( ) {
           }
         })
         .catch(error => { // request failed
-          setAuth(false) 
+          setAuth(false)
         });
     } else { // no token exists
-      setAuth(false) 
+      setAuth(false)
     }
   }, [])
 
   return (
     <div className="App">
-      <TokenContext.Provider value={{token: [token, setToken], auth: [auth, setAuth]}}>
-          <header>
-            <NavBar />
-          </header>
-            <Toaster position="top-center" toastOptions={{duration: 2000, style: {fontFamily: 'Arial, Helvetica, sans-serif', fontSize: "0.9rem"}}}  />
-          <Routes>
-            <Route
-              path="/"
-              element={<RootPage/>}
-            />
-            <Route path="register" element={<RegisterPage />} />
-            <Route path="login" element={<LoginPage />} />
-          </Routes>
+      <TokenContext.Provider value={{ token: [token, setToken], auth: [auth, setAuth] }}>
+        <header>
+          <NavBar />
+        </header>
+        <Toaster position="top-center" toastOptions={{ duration: 2000, style: { fontFamily: 'Arial, Helvetica, sans-serif', fontSize: "0.9rem" } }} />
+        <Routes>
+          <Route
+            path="/"
+            element={<RootPage />}
+          />
+          <Route path="register" element={<RegisterPage />} />
+          <Route path="login" element={<LoginPage />} />
+        </Routes>
       </TokenContext.Provider>
     </div>
   )

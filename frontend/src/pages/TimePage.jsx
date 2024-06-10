@@ -12,10 +12,9 @@ import Stopwatch from '../components/Stopwatch';
 import "../styles/TimePage.css"; // style sheet
 
 
-export default function TimePage() {
+export default function TimePage({ stopwatchsActive, setStopwatchsActive }) {
     const [events, setEvents] = useState();
     const [stopwatchIds, setStopwatchIds] = useState([1]);
-    const [stopwatchsActive, setStopwatchsActive] = useState(0);
 
     // get token
     const { token } = useContext(TokenContext);

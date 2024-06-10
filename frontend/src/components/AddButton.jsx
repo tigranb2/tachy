@@ -1,6 +1,6 @@
 import "../styles/AddButton.css";
 
-export default function AddButton({ stopwatchIds, setStopwatchIds}) {
+export default function AddButton({ stopwatchIds, setStopwatchIds }) {
     return (
         <button className="mainContainer addButton"
                 onClick={()=>setStopwatchIds([...stopwatchIds, stopwatchIds.length+1])}>
