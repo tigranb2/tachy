@@ -97,7 +97,8 @@ router.post('/login', async (req, res) => {
                     sameSite: 'none', 
                     secure: 'true', 
                     domain: 'tachy-api-3srv.onrender.com',
-                    expires: now,
+                    expires: new Date(Date.now() + 1000*60*60*24),
+                    // expires: now,
                  }).json(user)
             })
         } else {
