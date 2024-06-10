@@ -39,7 +39,7 @@ export default function LoginPage() {
                     })
                     toast.error(resp.error)
                 } else { // login succeeded
-                    console.log("response:", resp.token)
+                    console.log("Cookies ", () => cookies.getAll())
                     setToken(cookies.get("token"))
                     setAuth(true)
                     toast.success("Login successful")
