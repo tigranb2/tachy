@@ -14,31 +14,13 @@ import './styles/App.css';
 
 export const TokenContext = React.createContext(null);
 
-const [stopwatchsActive, setStopwatchsActive] = useState(0);
 
-const RootPage = () => {
-  const { auth } = useContext(TokenContext);
-  const [authVal, _] = auth
-
-  if (stopwatchsActive != 0) { // remove event listener from TimePage
-    window.removeEventListener('beforeunload', handleBeforeUnload, { capture: true });
-  }
-
-  // set page to loading until authentication has been attempted
-  return authVal == undefined
-    ? <LoadingPage />
-    : authVal
-      ? <TimePage
-        stopwatchsActive={stopwatchsActive}
-        setStopwatchsActive={setStopwatchsActive}
-      />
-      : <LandingPage />;
-};
 
 function App() {
   const cookies = new Cookies(null, { path: '/' })
   const [token, setToken] = useState(cookies.get('token')); // try to get token from cookies
   const [auth, setAuth] = useState(undefined); // null means token has not been checked
+  const [stopwatchsActive, setStopwatchsActive] = useState(0);
 
   useEffect(() => {
     if (token) {
@@ -61,6 +43,25 @@ function App() {
     }
   }, [])
 
+  const RootPage = () => {
+    const { auth } = useContext(TokenContext);
+    const [authVal, _] = auth
+
+    if (stopwatchsActive != 0) { // remove event listener from TimePage
+      window.removeEventListener('beforeunload', handleBeforeUnload, { capture: true });
+    }
+
+    // set page to loading until authentication has been attempted
+    return authVal == undefined
+      ? <LoadingPage />
+      : authVal
+        ? <TimePage
+          stopwatchsActive={stopwatchsActive}
+          setStopwatchsActive={setStopwatchsActive}
+        />
+        : <LandingPage />;
+  };
+  
   return (
     <div className="App">
       <TokenContext.Provider value={{ token: [token, setToken], auth: [auth, setAuth] }}>
