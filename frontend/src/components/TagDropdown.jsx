@@ -21,7 +21,7 @@ function TagDropdown({ tags, setTags, selectedTag, setSelectedTag }) {
         const handleClickOutside = (event) => {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target) && (isOpen || isAddingTag)) {
                 setIsAddingTag(false); // Close form
-                setSelectedTag(null); // Close dropdown (optional)
+                setSelectedTag({ name: null, color: null }); // Close dropdown (optional)
                 setIsOpen(false);
             }
         };
@@ -79,12 +79,11 @@ function TagDropdown({ tags, setTags, selectedTag, setSelectedTag }) {
     const handleTagDelete = useMutation({
         mutationFn: (tag) => {
             if (tag == selectedTag) {
-                setSelectedTag(null); // Deselect the deleted tag
+                setSelectedTag({ name: null, color: null }); // Deselect the deleted tag
             }
             return deleteTagRequest(tag, tokenVal)
         },
         onSettled: () => {
-            setSelectedTag(null);
             queryClient.invalidateQueries({queryKey: ['tags'], refetchType: 'all'});
         },
     });
@@ -103,10 +102,10 @@ function TagDropdown({ tags, setTags, selectedTag, setSelectedTag }) {
             <div className="dropdown-header"
                 onClick={toggleDropdown}
                 style={{
-                    backgroundColor: selectedTag ? selectedTag.color : '#28292a',
-                    color: selectedTag ? "#28292a" : "#e8e8e8",
+                    backgroundColor: selectedTag.name ? selectedTag.color : '#28292a',
+                    color: selectedTag.name ? "#28292a" : "#e8e8e8",
                 }}>
-                {selectedTag ? selectedTag.name : 'Select Tag'}
+                {selectedTag.name ? selectedTag.name : 'Select Tag'}
             </div>
 
             {isOpen && (

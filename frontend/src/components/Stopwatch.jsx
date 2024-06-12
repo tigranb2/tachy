@@ -14,7 +14,7 @@ export default function Stopwatch({ itemId,
                                     stopwatchesActive,
                                     setStopwatchesActive, }) {
   const [title, setTitle] = useState(""); // stores stopwatch title
-  const [selectedTag, setSelectedTag] = useState(null); // stores stopwatch tag
+  const [selectedTag, setSelectedTag] = useState({ name: '', color: '' }); // stores stopwatch tag
   const [time, setTime] = useState(0); // stores stopwatch time
   const [startTime, setStartTime] = useState(0); // start time at epoch
 
@@ -76,8 +76,9 @@ export default function Stopwatch({ itemId,
 
       // reset timer
       reset()
-
+      console.log("making event")
       // create event and upload to database
+      console.log(selectedTag)
       const newEvent = {
         tag: "",
         title: title,
