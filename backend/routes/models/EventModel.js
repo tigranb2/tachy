@@ -10,6 +10,12 @@ const eventSchema = new mongoose.Schema({
     title: { // optional name to categorize events
         type: String,
     },
+    tag: {
+        type: String,
+    },
+    color: {
+        type: String
+    },
     startTime: {
         type: Date,
         required: true,

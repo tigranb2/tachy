@@ -26,6 +26,11 @@
     background: none;
     color: var(--text-dm);
     border-radius: 0;   
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 3px 3px 0px;
 }
 
 .stopwatchTitle:focus {
@@ -33,6 +38,12 @@
     border-bottom: 1px solid var(--site-accent-color-2);
 }
 
+.stopwatchIdentifiers {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    margin-left: -0.5vw;
+}
 
 .removeStopwatch {
     font-size: 2em;

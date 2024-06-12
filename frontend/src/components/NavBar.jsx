@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import { useQueryClient } from 'react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 
@@ -50,7 +50,6 @@ function NavBar() {
                 {/* <li><a className="nav-link" href="https://github.com/tigranb2/armenian-dish-classification" target="_blank">Source Code</a></li> */}
                 <li>{authVal ? <button className="loginLogout" onClick={logoutClick}>Logout</button> : <button className="loginLogout" onClick={loginClick}>Login</button>}</li>
             </ul> 
-   
         </div>
     );
 };

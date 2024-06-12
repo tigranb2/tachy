@@ -1,7 +1,7 @@
 import { API_URL } from "./config"
 
 export default (token) => {
-  return fetch(`${API_URL}/readEvents`, {
+  return fetch(`${API_URL}/readTags`, {
     method: 'GET',
     headers: {
       Authorization: `Bearer ${token}`,

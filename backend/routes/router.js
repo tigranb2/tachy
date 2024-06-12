@@ -5,20 +5,17 @@ const dotenv = require('dotenv');
 const jwt = require('jsonwebtoken');
 
 const EventModel = require('./models/EventModel')
+const TagModel = require('./models/TagModel')
 const UserModel = require("./models/UserModel")
 
 const router = express.Router();
 dotenv.config(); // use .env
 
+router.get("/health", (req, res) => res.send("Server running"));
 
-// router.options("/*", function(req, res, next){
-//     // res.header('Access-Control-Allow-Origin', 'https://tachy.netlify.app');
-//     // res.header('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
-//     // res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
-//     // res.header("Access-Control-Allow-Credentials", "true")
-//     res.status(200).end();
-//   });
-
+//
+// AUTHENTICATION
+//
 // get token from header and verify authorization
 isAuthorized = (req, res, next) => {
     const authHeader = req.headers.authorization;
@@ -37,8 +34,6 @@ isAuthorized = (req, res, next) => {
         });
     }
 }
-
-router.get("/health", (req, res) => res.send("Server running"));
 
 router.post('/register', async (req, res) => {
     try {
@@ -110,10 +105,63 @@ router.post('/auth', (req, res) => {
     });
 }); // authenticate token
 
+
+//
+// TAGS
+//
+router.post('/createTag', isAuthorized, (req, res) => {
+    const tag = new TagModel({
+        user: req.user.id,
+        name: req.body.name,
+        color: req.body.color,
+    });
+    tag.save()
+        .then((newEvent) => res.json(newEvent))
+        .catch((err) => res.json(err));
+}); // create tag in DB
+
+router.get('/readTags', isAuthorized, (req, res) => {
+    TagModel.find({
+        user: req.user.id,
+    })
+        .then((events) => res.json(events))
+        .catch((err) => res.json(err))
+}); // read user's tags from DB
+
+router.delete('/deleteTag/:id', isAuthorized, async (req, res) => {
+    try {
+        const id = req.params.id;
+        const tag = await TagModel.findById({ _id: id }) // search for event
+
+        // throw error if event not found
+        if (!tag) {
+            res.status(404)
+            throw new Error('Event not found')
+        }
+
+        // Ensure user has authorization to delete event
+        if (tag.user.toString() !== req.user.id) {
+            res.status(401)
+            throw new Error("Unauthorized deletion");
+        }
+
+        // delete event
+        tag.deleteOne()
+            .then((event) => res.json(event))
+    } catch (err) {
+        res.json(err.message)
+    }
+}); // delete event from DB
+
+//
+// EVENTS
+//
 router.post('/createEvent', isAuthorized, (req, res) => {
     const event = new EventModel({
         user: req.user.id,
         title: req.body.title,
+        tag: req.body.tag,
+        color: req.body.color,
         startTime: req.body.startTime,
         endTime: req.body.endTime,
     });
@@ -122,18 +170,20 @@ router.post('/createEvent', isAuthorized, (req, res) => {
         .catch((err) => res.json(err));
 }); // create event in DB
 
-router.get('/readEvent', isAuthorized, (req, res) => {
+router.get('/readEvents', isAuthorized, (req, res) => {
     EventModel.find({
         user: req.user.id,
     })
         .then((events) => res.json(events))
         .catch((err) => res.json(err))
-}); // read events from DB
+}); // read user's events from DB
 
 router.put('/updateEvent/:id', isAuthorized, (res, req) => {
     const id = req.params.id;
     const updatedEvent = {
         title: req.body.title,
+        tag: req.body.tag,
+        color: req.body.color,
         startTime: req.body.startTime,
         endTime: req.body.endTime,
     };

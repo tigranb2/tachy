@@ -1,18 +1,26 @@
 import React, { useContext, useState, useEffect, Fragment } from "react";
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { TokenContext } from '../App';
 import createEventRequest from '../api/createEventRequest';
 import "../styles/Stopwatch.css";
+import TagDropdown from "./TagDropdown";
 
-export default function Stopwatch ({ itemId, stopwatchIds, setStopwatchIds, stopwatchesActive, setStopwatchesActive }) {
+export default function Stopwatch({ itemId,
+                                    tags,
+                                    setTags,
+                                    stopwatchIds,
+                                    setStopwatchIds,
+                                    stopwatchesActive,
+                                    setStopwatchesActive, }) {
   const [title, setTitle] = useState(""); // stores stopwatch title
+  const [selectedTag, setSelectedTag] = useState(null); // stores stopwatch tag
   const [time, setTime] = useState(0); // stores stopwatch time
   const [startTime, setStartTime] = useState(0); // start time at epoch
 
   // get token
   const { token } = useContext(TokenContext);
-  const [tokenVal, setToken] = token; 
+  const [tokenVal, setToken] = token;
 
   const queryClient = useQueryClient(); // for invalidating queries
 
@@ -26,7 +34,7 @@ export default function Stopwatch ({ itemId, stopwatchIds, setStopwatchIds, stop
       intervalId = setInterval(() => {
         let prevTime = startTime + (time * 10)
         let dt = Date.now() - prevTime; // milliseconds elapsed since last iteration
-        setTime(time + Math.floor(dt/10)) // divide by 10... doesn't have ms percision
+        setTime(time + Math.floor(dt / 10)) // divide by 10... doesn't have ms percision
       }, 10);
     }
     return () => clearInterval(intervalId);
@@ -59,13 +67,13 @@ export default function Stopwatch ({ itemId, stopwatchIds, setStopwatchIds, stop
 
   // API call to create event given timer start and end times
   // invalidates local cache after compeletion
-  const { mutate: createEvent } = useMutation(
-    () => {
+  const createEvent = useMutation({
+    mutationFn: () => {
       const startDate = new Date(0);
       const endDate = new Date(0);
       startDate.setUTCMilliseconds(startTime)
-      endDate.setUTCMilliseconds(startTime+(time*10))
-      
+      endDate.setUTCMilliseconds(startTime + (time * 10))
+
       // reset timer
       reset()
 
@@ -73,17 +81,17 @@ export default function Stopwatch ({ itemId, stopwatchIds, setStopwatchIds, stop
       const newEvent = {
         tag: "",
         title: title,
+        tag: selectedTag.name,
+        color: selectedTag.color,
         startTime: startDate,
         endTime: endDate,
       }
       return createEventRequest(newEvent, tokenVal);
     },
-    {
-      onSettled: () => {
-        queryClient.invalidateQueries('events');
-      },
-    }
-  );
+    onSettled: () => {
+      queryClient.invalidateQueries({queryKey: ['events']});
+    },
+  });
 
   // allow user to set name for stopwatch
   const handleUserInput = (event) => {
@@ -92,31 +100,39 @@ export default function Stopwatch ({ itemId, stopwatchIds, setStopwatchIds, stop
 
   // calculate width of user input title
   const getTitleWidth = () => {
-    const text = document.createElement("span"); 
+    const text = document.createElement("span");
     document.body.appendChild(text)
-    text.innerHTML = title; 
-    text.style.position = 'absolute'; 
-    text.style.whiteSpace = 'no-wrap'; 
-    text.style.height = 'auto'; 
-    text.style.width = 'auto'; 
+    text.innerHTML = title;
+    text.style.position = 'absolute';
+    text.style.whiteSpace = 'no-wrap';
+    text.style.height = 'auto';
+    text.style.width = 'auto';
     const titleWidth = text.clientWidth
     document.body.removeChild(text)
     return titleWidth
   }
 
-  return ( 
+  return (
     <div className="mainContainer stopwatchContainer">
       <div className="stopwatchTop">
-        <input id={"stopwatchTitle"+itemId}
-               style={{width: title.length ? Math.min(getTitleWidth() + 8, 256) + "px" : ""}} // dynamically set width
-               className="stopwatchTitle" 
-               type="text" 
-               value={title} 
-               placeholder="Enter event title..." 
-               onChange={handleUserInput} />
-        {itemId != 1 && <button className="closeButton removeStopwatch" onClick={()=>setStopwatchIds(stopwatchIds.slice(0,-1))}>
-                          <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><g fill="currentColor" fillRule="evenodd" clipRule="evenodd"><path d="M5.47 5.47a.75.75 0 0 1 1.06 0l12 12a.75.75 0 1 1-1.06 1.06l-12-12a.75.75 0 0 1 0-1.06"/><path d="M18.53 5.47a.75.75 0 0 1 0 1.06l-12 12a.75.75 0 0 1-1.06-1.06l12-12a.75.75 0 0 1 1.06 0"/></g> </svg>
-                        </button>}
+        <div className="stopwatchIdentifiers">
+          <TagDropdown 
+            tags={tags}
+            setTags={setTags}
+            selectedTag={selectedTag} 
+            setSelectedTag={setSelectedTag} 
+          />
+          <input id={"stopwatchTitle" + itemId}
+            style={{ width: title.length ? Math.min(getTitleWidth() + 8, 256) + "px" : "" }} // dynamically set width
+            className="stopwatchTitle"
+            type="text"
+            value={title}
+            placeholder="Enter event title..."
+            onChange={handleUserInput} />
+        </div>
+        {itemId != 1 && <button className="closeButton removeStopwatch" onClick={() => setStopwatchIds(stopwatchIds.slice(0, -1))}>
+          <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><g fill="currentColor" fillRule="evenodd" clipRule="evenodd"><path d="M5.47 5.47a.75.75 0 0 1 1.06 0l12 12a.75.75 0 1 1-1.06 1.06l-12-12a.75.75 0 0 1 0-1.06" /><path d="M18.53 5.47a.75.75 0 0 1 0 1.06l-12 12a.75.75 0 0 1-1.06-1.06l12-12a.75.75 0 0 1 1.06 0" /></g> </svg>
+        </button>}
       </div>
       <p className="stopwatchTime">
         {hours > 0 ? hours.toString().padStart(2, "0") + ":" : ""}
@@ -126,16 +142,16 @@ export default function Stopwatch ({ itemId, stopwatchIds, setStopwatchIds, stop
       </p>
       <div className="stopwatchButtons">
         {
-          time == 0 
+          time == 0
             ? <button className="stopwatchButton left" onClick={start}>
-                START
-              </button>
+              START
+            </button>
             : <button className="stopwatchButton left" onClick={reset}>
-                RESET
-              </button>
+              RESET
+            </button>
         }
-        <button className="stopwatchButton right" disabled={time == 0 ? true : false} onClick={createEvent}>
-              SAVE
+        <button className="stopwatchButton right" disabled={time == 0 ? true : false} onClick={() => createEvent.mutate()}>
+          SAVE
         </button>
 
         {
