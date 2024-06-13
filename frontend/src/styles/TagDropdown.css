@@ -176,3 +176,29 @@
     border-left: 0.5px var(--site-accent-color-2) solid;;
     border-right: 0;
 }
+
+
+@media (max-width: 401px) {
+    .dropdown-header, .dropdown-item, .add-tag-form, .add-tag-input, .color-options-grid, .form-buttons {
+        min-width: 100px;
+        max-width: 100px;
+        box-sizing: border-box; /* Include padding and border in the width calculation */
+    }
+    .dropdown-item, .dropdown-header, .dropdown-item.active {
+        font-size: 0.7rem;
+    }
+    .add-tag-input {
+        font-size: 0.6rem;
+    }
+    .form-buttons button {
+        max-width: 50px;
+        font-size: 0.6rem;
+    }
+    .color-circle {
+        width: 15px;
+        height: 15px;
+    }
+    .color-options-grid {
+        gap: 4px;
+    }
+}

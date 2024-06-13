@@ -99,7 +99,7 @@
     }
 }
 
-@media (max-width: 801px) {
+@media (max-width: 401px) {
     .rbc-label {
         font-size: 0.8rem;
     }
