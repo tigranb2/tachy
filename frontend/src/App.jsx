@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import { Toaster } from 'react-hot-toast'; // notifications
+import isDarkColor from 'is-dark-color';
 
 import authRequest from './api/authRequest';
 import NavBar from './components/NavBar';
@@ -13,6 +14,15 @@ import LoadingPage from './pages/LoadingPage';
 import './styles/App.css';
 
 export const TokenContext = React.createContext(null);
+
+// that red-orange color shouldn't be considered light...
+export const IsDarkColorModified = (color) => {
+  if (color === '#EB4034') {
+    return true
+  }
+  return isDarkColor(color)
+}
+
 
 const RootPage = () => {
   const { auth }= useContext(TokenContext);

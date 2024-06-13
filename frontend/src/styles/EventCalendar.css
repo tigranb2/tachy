@@ -70,13 +70,15 @@
     border-left-color: var(--site-accent-color-2) !important;
     border-top-color: var(--site-accent-color-2) !important;
 }
-.rbc-label {
-    color: var(--text-dm);
-}
-.rbc-event, .rbc-current-time-indicator {
+
+.rbc-current-time-indicator {
     background-color: var(--site-accent-color-1)
 }
-
+.rbc-event {
+    /* color: var(--site-bg-dm-muted); */
+    border: 0 !important;
+    
+}
 /* Mobile formatting */
 @media (max-width: 801px) {
     #calendarContainer {

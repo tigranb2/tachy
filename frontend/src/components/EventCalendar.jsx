@@ -6,7 +6,7 @@ import { Calendar, Views, DateLocalizer } from 'react-big-calendar'
 import Modal from 'react-modal';
 import moment from 'moment';
 
-import { TokenContext } from '../App';
+import { TokenContext, IsDarkColorModified } from '../App';
 import CustomToolbar from './CustomToolbar';
 import deleteEventRequest from '../api/deleteEventRequest';
 import "../styles/EventCalendar.css";
@@ -27,13 +27,13 @@ export default function EventCalendar({
       {
         id: x._id,
         title: x.title,
+        tag: x.tag,
         allDay: false,
         start: new Date(x.startTime),
         end: new Date(x.endTime),
         color: x.color
       }
-    ))
-    )
+    )));
   }, [events]);
 
   const queryClient = useQueryClient();
@@ -78,7 +78,9 @@ export default function EventCalendar({
           onRequestClose={() => setSelectedEvent(null)}
           style={modalStyles}>
           <div className="popupHeader">
-            <h3 className="popupTitle">{selectedEvent.title ? selectedEvent.title : "Untitled"}</h3>
+            <h3 className="popupTitle">
+              {selectedEvent.title ? selectedEvent.title + " " : "Untitled "}{selectedEvent.tag ? "(" + selectedEvent.tag + ")" : ""}
+              </h3>
             <button className="closeButton closePopup" onClick={() => setSelectedEvent(null)}>
               <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><g fill="currentColor" fillRule="evenodd" clipRule="evenodd"><path d="M5.47 5.47a.75.75 0 0 1 1.06 0l12 12a.75.75 0 1 1-1.06 1.06l-12-12a.75.75 0 0 1 0-1.06" /><path d="M18.53 5.47a.75.75 0 0 1 0 1.06l-12 12a.75.75 0 0 1-1.06-1.06l12-12a.75.75 0 0 1 1.06 0" /></g> </svg>
             </button>
@@ -97,9 +99,8 @@ export default function EventCalendar({
             toolbar: CustomToolbar,
             day: {
               event: (props) =>
-                <div>
-                  {props.title}
-                  <p className='eventTag'>{props.tag ? props.tag : ""}</p>
+                <div className="eventInfo">
+                  {props.title}{props.event.tag ? " (" + props.event.tag + ")" : ""}
                 </div>,
             },
           }}
@@ -114,7 +115,8 @@ export default function EventCalendar({
           formats={{ timeGutterFormat: 'hA' }}
           eventPropGetter={(events) => {
             const backgroundColor = events.color ? events.color : '#3163E0';
-            return { style: { backgroundColor } }
+            const color = IsDarkColorModified(backgroundColor) ? '#e8e8e8' : '#000000';
+            return { style: { backgroundColor, color } }
           }}
         />
       </div>

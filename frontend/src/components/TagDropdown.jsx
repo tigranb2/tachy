@@ -1,7 +1,7 @@
 import React, { useContext, useState, useRef, useEffect } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { TokenContext } from '../App';
+import { TokenContext, IsDarkColorModified } from '../App';
 import createTagRequest from '../api/createTagRequest';
 import deleteTagRequest from '../api/deleteTagRequest';
 import '../styles/TagDropdown.css' // stylesheet
@@ -97,21 +97,36 @@ function TagDropdown({ tags, setTags, selectedTag, setSelectedTag }) {
 
     const dropdownRef = useRef(null);
 
+    // dynamically color tag
+    const getColor = (backgroundColor) => {
+        return IsDarkColorModified(backgroundColor) ? '#e8e8e8' : '#28292a';
+    }
+
+    // dynamically color tag; handle null input
+    const getColorNull = (backgroundColor) => {
+
+        return backgroundColor ? getColor(backgroundColor) : ''
+    }
+
     return (
         <div className="tag-dropdown" ref={dropdownRef}>
             <div className="dropdown-header"
                 onClick={toggleDropdown}
-                style={{
-                    backgroundColor: selectedTag.name ? selectedTag.color : '#28292a',
-                    color: selectedTag.name ? "#28292a" : "#e8e8e8",
-                }}>
+                style={{ 
+                    backgroundColor: selectedTag.name  ? selectedTag.color : '#28292a', 
+                    color: getColorNull(selectedTag.color)}}>
                 {selectedTag.name ? selectedTag.name : 'Select Tag'}
             </div>
 
             {isOpen && (
                 <ul className="dropdown-list">
                     {tags.map(tag => (
-                        <li key={tag.name} className="dropdown-item" onClick={() => handleTagSelect(tag)} style={{ backgroundColor: tag.color, color: 'white' }}>
+                        <li 
+                            key={tag.name} 
+                            className="dropdown-item" 
+                            onClick={() => handleTagSelect(tag)} 
+                            style={{ backgroundColor: tag.color, color: getColor(tag.color) }}
+                        >
                             <p className="dropdown-text">{tag.name}</p>
                             <button className="delete-button" onClick={(e) => {e.stopPropagation(); handleTagDelete.mutate(tag)}}>
                                 <p className="dropdown-text">
@@ -140,7 +155,7 @@ function TagDropdown({ tags, setTags, selectedTag, setSelectedTag }) {
                         maxLength={10}
                         style={{
                             backgroundColor: newTagColor ? newTagColor : '',
-                            color: newTagColor ? '#28292a' : '',
+                            color: getColorNull(newTagColor)
                         }}
                     />
                     <div className="color-options-grid">
