@@ -130,9 +130,9 @@
 }
 
 .color-circle {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
+    width: 20px !important;
+    height: 20px !important;
+    border-radius: 50% !important;
     cursor: pointer;
     border: 2px solid transparent;
     /* Default border */
@@ -195,10 +195,10 @@
         font-size: 0.6rem;
     }
     .color-circle {
-        width: 15px;
-        height: 15px;
+        width: 15px !important;
+        height: 15px !important;
     }
     .color-options-grid {
-        gap: 4px;
+        gap: 4px !important;
     }
 }
