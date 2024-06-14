@@ -37,7 +37,7 @@ const RootPage = () => {
 function App( ) {
   const cookies = new Cookies(null, { path: '/' })
   const [token, setToken] = useState(cookies.get('token')); // try to get token from cookies
-  const [auth, setAuth] = useState(undefined); // null means token has not been checked
+  const [auth, setAuth] = useState(undefined); // undefined means token has not been checked
 
   useEffect(() => {
     if(token) {
