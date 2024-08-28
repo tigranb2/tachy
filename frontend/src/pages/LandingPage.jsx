@@ -10,7 +10,7 @@ export default function LandingPage() {
                 <p className="landingText">Track your work habits to identify areas of improvement and optimize scheduling. Accessible anywhere, anytime.</p>
                 <div id="landingButtonContainer">
                     <button className="landingButton" onClick={() => navigate('/register')}>REGISTER</button>
-                    <button className="landingButton">VIDEO DEMO</button>
+                    <button className="landingButton"><a className="link" href="https://youtu.be/BVec2r6w4GM" target="_blank">VIDEO DEMO</a></button>
                 </div>
             </div>
         </div>

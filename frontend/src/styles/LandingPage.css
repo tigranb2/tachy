@@ -58,6 +58,11 @@
     background-color: var(--site-accent-color-3); /* Darker blue on hover */
 }
 
+.link, .link:visited {
+    text-decoration: none;
+    color: inherit;
+}
+
 @media (max-width: 1201px) {
     #landingContainer {
         transform: translateY(10vh);
