@@ -12,8 +12,8 @@ dotenv.config(); // use .env
 
 const app = express();
 app.use(cors({
-    // origin : `https://tachy.pages.dev`, // frontend url
-    origin : `http://localhost:5173`, // testing
+    origin : `https://tachy.pages.dev`, // frontend url
+    // origin : `http://localhost:5173`, // testing
     credentials: true, // accept cookies
 }));
 
